@@ -84,14 +84,66 @@ void newGame(){
     cout<<"Enter a name for player 2"<<endl;
     cout<<">";
     std::getline(std::cin >> std::ws, name2);
+
     cout<<"\nLet's Play!"<<endl;
     cout<<"\n=== Start Round ==="<<endl;
     //printBoard();
+    cout<<"Turn For Player A:"<<endl;
+    cout<<"Factories:"<<endl;
+    Factory* f1 = new Factory();
+    //Factory storeFactory1 = f1->fillFactory();
+    f1->fillFactory();
+    f1->print();
     //Making a board using vectors
-    Board* board = new Board();
-    board->makeBoardTwo();
-    //TODO
+    cout<<"Mosaic for A:"<<endl;
+    Board* board1 = new Board();
+    board1->makeBoardTwo();
+    //board1->makeBoardOne();
+    //board1->printBoard();
+    cout<<endl;
+    cout<<"> turn";
+    //string input1, input2, input3;
+    int input1, input3;
+    string input2;
+    cin>>input1>>input2>>input3;
+    cout<<input1<<"   "<<input2<<"  "<<input3;
+    cout<<endl;
+    //int valFactory = stoi(input3);
+    //cout<<valFactory;
+    //int valBoard = stoi(input3);
+
+    // for(int i=0; i<f1->getSize(); i++){
+    //     for(int j=0; j<5;j++){
+    //         const char** update = board1->getBoard();
+    //         update[valFactory][j] = "B";
+    //     }
+    // }
+    //TODOs
+   // for(int i=0; i<f1->getSize(); i++){
+   // board1->addTileOnBoard(valFactory);
+   // f1->getList()->
+   //int count =0;
+    //cout<<(f1->getList()->findNode(input1));
     
+  //  (f1->getList(),input1);
+    f1->getElementAtIndex(f1,input1);
+    board1->addTileOnBoard(input3-1);
+    cout<<endl;
+   // board1->printBoard();
+    //}
+    cout<<"Turn Successful"<<endl;
+
+    //TODO
+    cout<<"Turn For Player B:"<<endl;
+    cout<<"Factories:"<<endl;
+    Factory* f2 = new Factory();
+    //Factory storeFactory1 = f1->fillFactory();
+    f2->fillFactory();
+    f2->print();
+    //Making a board using vectors
+    cout<<"Mosaic for B:"<<endl;
+    Board* board2 = new Board();
+    board2->makeBoardTwo();
 
 
 

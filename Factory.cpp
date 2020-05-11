@@ -77,6 +77,7 @@ void Factory::fillFactory(){
            // t = new Tiles(firstplayer);
            
            std::random_shuffle(tileVector.begin(),tileVector.end());
+         // std::shuffle(tileVector.begin(), tileVector.end());
             factory[i]->addNode(tileVector[j]);
         
             // t = new Tiles(Red);
@@ -98,6 +99,7 @@ void Factory::fillFactory(){
     factory[0]->deleteFront();
     factory[0]->addFront(new Tiles('F')) ;
     
+   // return *factory;
 
 }
 
@@ -141,6 +143,11 @@ int Factory::random(int min, int max)
   return randomNo;
 }
 
+// Tile* Factory::getTile(){
+//     factory[6] = {l1,l2,l3,l4,l5,l6};
+// return 
+// }
+
 void Factory::Shuffle(){
      LinkedList* factory[6] = {l1,l2,l3,l4,l5,l6};
     for(int i  = 0 ;  i < 4;++i){
@@ -156,11 +163,43 @@ void Factory::Shuffle(){
     }
 }
 
+//  Factory::getTile(int val){
+//      factory[6] = factory[l1,l2,l3,l4,l5];
+//     for(int i=0; i<6; i++){
+//         for(int j=0; j<11; j++){
+//             if(val==i){
+//                 return factory[i];
+//             }
+//         }
+//     }
+// }
 
 
+void Factory::getElementAtIndex(Factory *f,int index){
+   LinkedList* factory[6] = {l1,l2,l3,l4,l5,l6};
+    // for(int i=0; i<6; i++){
+    //    if(index==i){
+    //     //TODO
+
+    //    }
+    // }
+   // factory->(f->getList(),index);
+//    for(int i=0; i<6; i++){
+//        if(index==i){
+//   // return factory[i]->getElement(f->getList(),index);
+//   factory[i]->getElement(f->getList(),index);
+//        }
+//    }
+//    return nullptr;
+factory[index]->getElement(f->getList(),index);
+}
 
 
-
-
+// Tiles* Factory::getTiles(){
+//     LinkedList* factory[6] = {l1,l2,l3,l4,l5,l6};
+//     for(int i=0; i<6; i++){
+//         factory[i]->
+//     }
+// }
 
 

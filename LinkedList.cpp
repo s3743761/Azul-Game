@@ -1,6 +1,6 @@
 
 #include "LinkedList.h"
-
+#include "Factory.h"
 LinkedList::LinkedList() : head(nullptr),
                            current(nullptr),
                            tail(nullptr)
@@ -41,6 +41,14 @@ void LinkedList::addNode(Tiles *a)
     numOfNodes++;
   }
 } //end of addNode
+
+// Node LinkedList::getNode(LinkedList* f,int i){
+//   Node* newNode = new Node(f->,nullptr);
+
+// }
+
+
+
 /* find node for the random int to pull out */
 Node *LinkedList::findNode(int f)
 {
@@ -163,4 +171,19 @@ void LinkedList::printLine()
   }
 
   std::cout << std::endl;
+}
+
+Tiles* LinkedList::getElement(LinkedList* f,int index){
+  
+  Tiles* a = new Tiles('R');
+  Node* newElement = new Node(a,nullptr);
+  for(int i=0; i<6; i++){
+   // newElement = f->findNode(index);
+   //TODO
+   //
+  }
+ 
+  std::cout<<"We found"<<newElement->getTile();
+  //return f->findNode(i);
+  return nullptr;
 }

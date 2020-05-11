@@ -26,7 +26,8 @@ public:
    void swapNodes(int from, int to);
 
    void printLine();
-
+   Tiles* getElement(LinkedList* factory,int i);
+     // void getElement(int index);
 
 
 private:

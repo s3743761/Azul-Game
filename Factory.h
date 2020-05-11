@@ -33,16 +33,21 @@
 #include <iostream>
 #include "LinkedList.h"
 #include "Bag.h"
+#include "Tiles.h"
 class Factory{ 
 public:
 
 Factory();
 void fillFactory();
+//Factory fillFactory();
+//LinkedList* fillFactory();
 LinkedList* getList();
 void addFactory(Factory *factory);
 int getSize();
 void Shuffle();
 void print();
+//Tiles* getElementAtIndex(Factory *factory,int index);
+void getElementAtIndex(Factory *factory,int index);
 
 private:
 LinkedList* l1;

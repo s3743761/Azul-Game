@@ -1,6 +1,8 @@
 #include<iostream>
 #include<stdio.h>
+#include<vector>
 #include "Board.h"
+#include "TileColour.h"
 using namespace std;
 
 Board::Board()
@@ -74,7 +76,7 @@ for(int i=0; i<rows; i++){
 void Board::makeBoardTwo(){    
     //Alternative
     int size = 11;
-    vector<vector<const char*>> board(5,vector<const char*> (11,0));
+   // vector<vector<const char*>> board(5,vector<const char*> (11,0));
 
 // }
 int rows = 5;
@@ -85,19 +87,19 @@ for(int i=0; i<rows; i++){
         if(j<(size-1)/2){
             // std::cout<<i+1<<": ";
             if(j<=val-i){
-            board[i][j] = " ";
+            newBoard[i][j] = " ";
             }
             else
             {
-                board[i][j] = ".";
+                newBoard[i][j] = ".";
             }
         }
         else{
             if(j==5){
-                board[i][j] = "||";
+                newBoard[i][j] = "||";
             }
             else{
-            board[i][j] = ".";
+            newBoard[i][j] = ".";
             }
         }
     }
@@ -109,7 +111,7 @@ for(int i=0; i<rows; i++){
     std::cout<<i+1<<": ";
     for(int j=0; j<11; j++)
     {
-        std::cout<<board[i][j];
+        std::cout<<newBoard[i][j];
 }
 std::cout<<std::endl;
 }
@@ -134,3 +136,49 @@ std::cout<<std::endl;
 }
 
 
+const char** Board::getBoard(){
+    return *board;
+}
+
+vector<vector<const char*>> Board::getNewBoard(){
+    return newBoard;
+}
+
+// void Board::addTileOnBoard(int val,Tiles* tile){
+//     for(int i=0; i<6; i++){
+//         for(int j=0; j<11; j++){
+//            if(i==val){
+//             newBoard[i][j] = "K";
+//            }
+//         }
+//     }
+// }
+
+void Board::printVectorBoard(){
+    int rows=5;
+    // columns=5;
+for(int i=0; i<rows; i++){
+    std::cout<<i+1<<": ";
+    for(int j=0; j<11; j++)
+    {
+        std::cout<<newBoard[i][j];
+}
+std::cout<<std::endl;
+}
+}
+
+void Board::addTileOnBoard(int val){
+    int size =11;
+    for(int i=0; i<6; i++){
+        for(int j=0; j<11; j++){
+        //  while(strcmp(newBoard[i][j],"||")!=0){
+           
+           if(i==val&& (strcmp(newBoard[i][j],".")==0)&& j<(size-1)/2){
+            newBoard[i][j] = "K";
+           }
+            
+         //}
+        }
+    }
+printVectorBoard();
+}
