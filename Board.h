@@ -21,7 +21,10 @@ void printBoard();
 const char** getBoard();
 std::vector<std::vector<const char*>> getNewBoard();
 //void addTileOnBoard(int val, Tiles *tile);
-void addTileOnBoard(int val);
+void addTileOnBoard(int val,string tile, int count);
+//void addTileOnBoard(int val,Colour tile);
+int getEmptyRowSize(int val);
+void addBrokenTile(int count, int value, char cstr[]);
 void printVectorBoard();
 private:
 int boardHeight = 5;

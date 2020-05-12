@@ -13,9 +13,9 @@ LinkedList::~LinkedList()
 {
 }
 
-void LinkedList::addNode(Tiles *a)
+void LinkedList::addNode(Tiles *tile)
 {
-  NodePtr node = new Node(a, nullptr);
+  NodePtr node = new Node(tile, nullptr);
   /* checks if the list is already empty
      * then go through the list, using next to
      * point to the next node
@@ -50,11 +50,11 @@ void LinkedList::addNode(Tiles *a)
 
 
 /* find node for the random int to pull out */
-Node *LinkedList::findNode(int f)
+Node *LinkedList::findNode(int index)
 {
   Node *temp = head;
 
-  for (int count = 1; count <= f; count++)
+  for (int count = 1; count <= index; count++)
   {
 
     temp = temp->getNext();
@@ -173,10 +173,10 @@ void LinkedList::printLine()
   std::cout << std::endl;
 }
 
-Tiles* LinkedList::getElement(LinkedList* f,int index){
+Tiles* LinkedList::getElement(LinkedList* list,int index){
   
-  Tiles* a = new Tiles('R');
-  Node* newElement = new Node(a,nullptr);
+  Tiles* tile = new Tiles("R");
+  Node* newElement = new Node(tile,nullptr);
   for(int i=0; i<6; i++){
    // newElement = f->findNode(index);
    //TODO

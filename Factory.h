@@ -34,6 +34,16 @@
 #include "LinkedList.h"
 #include "Bag.h"
 #include "Tiles.h"
+
+//typedef char* a;
+// #define a "B"
+// #define b "L"
+// #define c "U"
+// #define d "Y"
+// #define e "R"
+// #define f "."
+// #define player "F"
+
 class Factory{ 
 public:
 
@@ -48,7 +58,10 @@ void Shuffle();
 void print();
 //Tiles* getElementAtIndex(Factory *factory,int index);
 void getElementAtIndex(Factory *factory,int index);
-
+//Tiles *Factory::getNumberTiles(int index,char a);
+int getNumberTiles(int index,char* tile);
+//int getNumberTiles(int index, string tile);
+//int getNumberTiles(int index,string tile);
 private:
 LinkedList* l1;
 LinkedList* l2;

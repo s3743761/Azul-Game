@@ -98,9 +98,9 @@
 using namespace std;
 
 int main(){
-Factory* f = new Factory();
-f->fillFactory();
-f->print();
+// Factory* f = new Factory();
+// f->fillFactory();
+// f->print();
 
 }
     

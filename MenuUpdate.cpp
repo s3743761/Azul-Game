@@ -9,6 +9,8 @@ void newGame();
 void loadGame();
 void credits();
 void quit();
+//
+void playTurn(Factory* f,Board* board);
 //void printBoard();
 // const char board[5][13] = {{' ',' ',' ',' ', '.' , '|' , '|' , '.','.','.','.','.',},
 //                             {' ',' ',' ','.', '.' ,'|', '|' ,'.','.','.','.','.',},
@@ -100,37 +102,56 @@ void newGame(){
     board1->makeBoardTwo();
     //board1->makeBoardOne();
     //board1->printBoard();
-    cout<<endl;
-    cout<<"> turn";
-    //string input1, input2, input3;
-    int input1, input3;
-    string input2;
-    cin>>input1>>input2>>input3;
-    cout<<input1<<"   "<<input2<<"  "<<input3;
-    cout<<endl;
-    //int valFactory = stoi(input3);
-    //cout<<valFactory;
-    //int valBoard = stoi(input3);
+//     cout<<endl;
+//     cout<<"> turn";
+//     //string input1, input2, input3;
+//     int input1, input3;
+//     string input2;
+   
+//     //char* input2 =nullptr;
+//     //char* input2;
+//     //char input2;
+//    // Colour input2;
+//     //cin>>input1>>input2>>input3;
+//     cin>>input1;
+//     cin>>input2;
+//    // std::getline(input2);
+//     cin>>input3;
+//     char cstr[input2.size()+1];
+//     strcpy(cstr,input2.c_str());
+//     //cout<<input1<<"   "<<input2<<"  "<<input3;
+//     cout<<input1<<""<<input3;
+//     cout<<endl;
+//     //int valFactory = stoi(input3);
+//     //cout<<valFactory;
+//     //int valBoard = stoi(input3);
 
-    // for(int i=0; i<f1->getSize(); i++){
-    //     for(int j=0; j<5;j++){
-    //         const char** update = board1->getBoard();
-    //         update[valFactory][j] = "B";
-    //     }
-    // }
-    //TODOs
-   // for(int i=0; i<f1->getSize(); i++){
-   // board1->addTileOnBoard(valFactory);
-   // f1->getList()->
-   //int count =0;
-    //cout<<(f1->getList()->findNode(input1));
+//     // for(int i=0; i<f1->getSize(); i++){
+//     //     for(int j=0; j<5;j++){
+//     //         const char** update = board1->getBoard();
+//     //         update[valFactory][j] = "B";
+//     //     }
+//     // }
+//     //TODOs
+//    // for(int i=0; i<f1->getSize(); i++){
+//    // board1->addTileOnBoard(valFactory);
+//    // f1->getList()->
+//    //int count =0;
+//     //cout<<(f1->getList()->findNode(input1));
     
-  //  (f1->getList(),input1);
-    f1->getElementAtIndex(f1,input1);
-    board1->addTileOnBoard(input3-1);
-    cout<<endl;
-   // board1->printBoard();
-    //}
+//   //  (f1->getList(),input1);
+//   //  f1->getElementAtIndex(f1,input1);
+//     // int val = f1->getNumberTiles(input1,input2);
+//      int val = f1->getNumberTiles(input1,cstr);
+//     std::cout<<val<<std::endl;
+//     board1->addTileOnBoard(input3-1,input2,val);
+//     cout<<endl;
+
+// ^ repeated code
+    
+    playTurn(f1,board1);
+    
+   
     cout<<"Turn Successful"<<endl;
 
     //TODO
@@ -144,13 +165,37 @@ void newGame(){
     cout<<"Mosaic for B:"<<endl;
     Board* board2 = new Board();
     board2->makeBoardTwo();
-
-
-
+    playTurn(f2,board2);
     
+    
+    
+
     showMenu();
+
 }
 
+void playTurn(Factory*f1, Board* board){
+    cout<<endl;
+    cout<<"> turn";
+    int input1, input3;
+    string input2;
+   
+    cin>>input1;
+    cin>>input2;
+   
+    cin>>input3;
+    char cstr[input2.size()+1];
+    strcpy(cstr,input2.c_str());
+    
+    cout<<input1<<""<<input3;
+    cout<<endl;
+    
+     int val = f1->getNumberTiles(input1,cstr);
+    std::cout<<val<<std::endl;
+    board->addTileOnBoard(input3-1,input2,val);
+    cout<<endl;
+    
+}
 void loadGame(){
     cout<<"Enter File Name from which load a game: \n";
     cout<<">";

@@ -167,18 +167,94 @@ std::cout<<std::endl;
 }
 }
 
-void Board::addTileOnBoard(int val){
+int Board::getEmptyRowSize(int val){
+    int value =0,size=11;
+  for(int i=0;i<6; i++){
+    // for(int j=0; j<11; j++){
+    //     if(i==val && strcmp(newBoard[i][j],".")==0){
+    //         value++;
+    //     }
+    for(int j=0; j<11; j++){
+    if(i==val && strcmp(newBoard[i][j], ".")==0 && j<(size-1)/2)
+    {
+value+=1;
+    }
+    }
+    }
+    return value;
+}
+
+void Board::addBrokenTile(int count, int value, char cstr[]){
+  
+   if(count>value){
+    int newSize = (count-value);
+//std::cout<<newSize;
+string broken[newSize];
+
+//this is using a vector
+//vector<char> broken(newSize);
+
+  //  broken.push_back(tile);
+//for(int i=0; i<newSize; i++){
+   //broken[i] = cstr;
+
+   
+//   for(int i=0; i<newSize; i++){
+//   // broken.push_back(cstr[i]);
+
+//    }
+
+// //}
+// cout<<"broken:";
+// // for(int i=0; i<newSize; i++){
+
+// //    cout<<broken.at(i)<<" ";
+// // }
+// for(auto i = broken.begin(); i!=broken.end(); ++i){
+//     cout<<*i;
+// }
+// cout<<std::endl;
+
+//This is using a string array
+for(int i=0; i<newSize; i++){
+    broken[i]=cstr;
+}
+cout<<"broken:";
+for(int i=0; i<newSize; i++){
+    cout<<broken[i]<<" ";
+}
+cout<<endl;
+}
+else{
+    cout<<"broken:"; 
+}
+
+}
+
+void Board::addTileOnBoard(int val,string tile, int count){
     int size =11;
+    int flag =0;
+    
+    char cstr[tile.size()+1];
+    strcpy(cstr,tile.c_str());
+
+    int value = getEmptyRowSize(val);
+    //cout<<value;
     for(int i=0; i<6; i++){
         for(int j=0; j<11; j++){
-        //  while(strcmp(newBoard[i][j],"||")!=0){
+           if(i==val&& (strcmp(newBoard[i][j],".")==0)&& j<(size-1)/2 &&flag<count){
+
+            newBoard[i][j] = cstr;
+            flag+=1;
+          
+            }
            
-           if(i==val&& (strcmp(newBoard[i][j],".")==0)&& j<(size-1)/2){
-            newBoard[i][j] = "K";
-           }
-            
-         //}
         }
     }
+
+
 printVectorBoard();
+addBrokenTile(count,value,cstr);
+
+
 }
