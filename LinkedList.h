@@ -24,9 +24,10 @@ public:
    void addAt(int i, Node* data);
    int returnSize();
    void swapNodes(int from, int to);
+   void removeElement(std::string);
 
    void printLine();
-   Tiles* getElement(LinkedList* factory,int i);
+   Tiles* getElement(LinkedList* factory,int i,Tiles* tile);
      // void getElement(int index);
 
 

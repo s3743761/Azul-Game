@@ -17,6 +17,7 @@ public:
 Tiles(Colour colour);
 Colour getColour();
 std::string getTileDetails();
+void setColour(Colour colour);
 
 void printTile();
 // std::string getIndexTiles(int i);

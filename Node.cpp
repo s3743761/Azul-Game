@@ -24,3 +24,7 @@ Node* Node::getNext()
 void Node::setNext(Node* a){
   next = a;
 }
+
+void Node::setTile(Colour colour){
+  tile->setColour(colour);
+}

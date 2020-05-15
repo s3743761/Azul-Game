@@ -12,6 +12,7 @@ public:
 
    Tiles* getTile();
    Node* getNext();
+   void setTile(Colour colour);
    void setNext(Node* a);
 
 /* i made these private??, and are these arrays? */

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "LinkedList.h"
-#include "Bag.h"
+#include "Factory.h"
 
 
 using namespace std;
@@ -17,7 +17,7 @@ int getPoints();
 void setPoints(int points);
 int tilesinhand();
 LinkedList returnlist();
-void fillHand(Bag* bag);
+void fillHand(Factory* factory);
 
 
  private:

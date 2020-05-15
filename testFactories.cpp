@@ -95,12 +95,16 @@
 #include "LinkedList.h"
 #include "Factory.h"
 #include "Tiles.h"
+#include "Player.h"
 using namespace std;
 
 int main(){
-// Factory* f = new Factory();
-// f->fillFactory();
-// f->print();
+Factory* f = new Factory();
+f->fillFactory();
+Player* player = new Player("Prabhav",0);
+// player->fillHand(f);
+
+
 
 }
     

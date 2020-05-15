@@ -1,32 +1,36 @@
 #include "Player.h"
 
-
-
 using namespace std;
 
-Player::Player(string name, int points){
-    this->name = name;
-    this->points = points;
+Player::Player(string name, int points)
+{
+  this->name = name;
+  this->points = points;
 }
 
-string Player::getName(){
-    return this->name;
+string Player::getName()
+{
+  return this->name;
 }
 
-void Player::setName(string name){
-    this->name = name;
+void Player::setName(string name)
+{
+  this->name = name;
 }
 
-int Player::getPoints(){
-    return this->points;
+int Player::getPoints()
+{
+  return this->points;
 }
 
-void Player::setPoints(int points){
-    this->points = points;
+void Player::setPoints(int points)
+{
+  this->points = points;
 }
 
-LinkedList Player::returnlist(){
-    return *list;
+LinkedList Player::returnlist()
+{
+  return *list;
 }
 
 int Player::tilesinhand()
@@ -34,10 +38,10 @@ int Player::tilesinhand()
   return list->returnSize();
 }
 
-void Player::fillHand(Bag *bag)
+void Player::fillHand(Factory* factory)
 {
   for (int i = 0; i < 6; i++)
   {
-    list->addNode(bag->pickFromBag()->getTile());
+    factory->fillFactory();
   }
 }

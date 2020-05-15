@@ -47,8 +47,6 @@ void LinkedList::addNode(Tiles *tile)
 
 // }
 
-
-
 /* find node for the random int to pull out */
 Node *LinkedList::findNode(int index)
 {
@@ -67,7 +65,7 @@ void LinkedList::addAt(int i, Node *node)
   if (i > 0 && i < numOfNodes)
   { /* find the node  
     and then set the pointers according 
-    */ 
+    */
     Node *ka = findNode(i);
     findNode(i - 1)->setNext(node);
     findNode(i - 1)->getNext()->setNext(ka);
@@ -91,24 +89,25 @@ void LinkedList::addAt(int i, Node *node)
 }
 
 void LinkedList::addBack(Tiles *data)
-{ 
+{
   Node *newNode = new Node(data, nullptr);
   tail->setNext(newNode);
   tail = tail->getNext();
   numOfNodes++;
 }
 
-void LinkedList::addFront(Tiles *data){
-  Node *newNode = new Node(data,nullptr);
+void LinkedList::addFront(Tiles *data)
+{
+  Node *newNode = new Node(data, nullptr);
   newNode->setNext(head);
   head = newNode;
   numOfNodes++;
 }
 /* delete selected tile pointer */
 void LinkedList::deleteNode(int i)
-{  
+{
   if (i == 0)
-  { 
+  {
     head = head->getNext();
     numOfNodes--;
   }
@@ -120,8 +119,7 @@ void LinkedList::deleteNode(int i)
   {
     findNode(i - 1)->setNext(findNode(i + 1));
     numOfNodes--;
-  } 
-
+  }
 }
 
 void LinkedList::deleteBack()
@@ -134,7 +132,7 @@ void LinkedList::deleteBack()
 
 void LinkedList::deleteFront()
 {
- 
+
   head = head->getNext();
   numOfNodes--;
 }
@@ -149,7 +147,7 @@ void LinkedList::printLine()
 {
   current = head;
 
-  while (current->getNext() != nullptr )
+  while (current->getNext() != nullptr)
   {
     current->getTile()->printTile();
 
@@ -165,25 +163,50 @@ void LinkedList::printLine()
     current = current->getNext();
   }
 
-  if (head->getNext() == nullptr) 
+  if (head->getNext() == nullptr)
   {
-    std::cout<< head->getTile()->getTileDetails();
+    std::cout << head->getTile()->getTileDetails();
   }
 
   std::cout << std::endl;
 }
 
-Tiles* LinkedList::getElement(LinkedList* list,int index){
-  
-  Tiles* tile = new Tiles("R");
-  Node* newElement = new Node(tile,nullptr);
-  for(int i=0; i<6; i++){
-   // newElement = f->findNode(index);
-   //TODO
-   //
+Tiles *LinkedList::getElement(LinkedList *list, int index,Tiles* tile)
+{
+
+  // Tiles *tile = new Tiles("R");
+  Node *newElement = new Node(tile, nullptr);
+  for (int i = 0; i < 6; i++)
+  {
+    // newElement = f->findNode(index);
+    //TODO
+    //
   }
- 
-  std::cout<<"We found"<<newElement->getTile();
+
+  std::cout << "We found" << newElement->getTile();
   //return f->findNode(i);
   return nullptr;
 }
+
+void LinkedList::removeElement(std::string tile){
+    // NodePtr node = head;
+    int pos = 0;
+   
+   if(head==NULL) {
+      printf("Linked List not initialized");
+      return;
+   } 
+
+   current = head;
+   while(current->getNext()!=NULL) {
+      if(current->getTile()->getColour() == tile) {
+         current->setTile(notile);
+         return;
+      }
+      
+      current = current->getNext();
+      pos++;
+   }
+
+}
+

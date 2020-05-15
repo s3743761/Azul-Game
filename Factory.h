@@ -49,19 +49,18 @@ public:
 
 Factory();
 void fillFactory();
-//Factory fillFactory();
-//LinkedList* fillFactory();
+
 LinkedList* getList();
 void addFactory(Factory *factory);
 int getSize();
 void Shuffle();
 void print();
-//Tiles* getElementAtIndex(Factory *factory,int index);
-void getElementAtIndex(Factory *factory,int index);
-//Tiles *Factory::getNumberTiles(int index,char a);
-int getNumberTiles(int index,char* tile);
-//int getNumberTiles(int index, string tile);
-//int getNumberTiles(int index,string tile);
+
+void getElementAtIndex(Factory *factory,int index,Tiles* tile);
+void removeElement(int i,std::string colour);
+
+int getNumberTiles(int index,char* colour);
+
 private:
 LinkedList* l1;
 LinkedList* l2;
