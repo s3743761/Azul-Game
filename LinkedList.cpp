@@ -189,24 +189,75 @@ Tiles *LinkedList::getElement(LinkedList *list, int index,Tiles* tile)
 }
 
 void LinkedList::removeElement(std::string tile){
-    // NodePtr node = head;
-    int pos = 0;
-   
-   if(head==NULL) {
-      printf("Linked List not initialized");
-      return;
-   } 
+ 
+    // head = dummy->getNext();
 
-   current = head;
-   while(current->getNext()!=NULL) {
-      if(current->getTile()->getColour() == tile) {
-         current->setTile(notile);
-         return;
-      }
-      
-      current = current->getNext();
-      pos++;
-   }
+  // Node *temp = head;
+  // Node *prev = nullptr;
+
+  // while(temp != nullptr){
+  //   while(temp!= nullptr && temp->getTile()->getColour() == tile){
+  //     prev = temp;
+  //     temp = temp->getNext();
+  //   }
+
+  //   if(temp == nullptr){
+  //     prev->setNext(temp->getNext());
+  //     temp = prev->getNext();
+  //   }
+  // }
+    Node *temp;
+    Node *prev = NULL;
+    Node *next;
+
+    for (temp = head;  temp != NULL;  temp = next) {
+        next = temp->getNext();
+
+        if (temp->getTile()->getColour() != tile) {
+            prev = temp;
+            continue;
+        }
+
+        if (prev != NULL)
+            prev->setNext(next);
+        else
+            head = next;
+
+        delete temp;
+    }
+
+
+
+
+
+
+    // int pos = 0;
+   
+    // Node *current,*store;
+    // current = head;
+  //  current = head;
+  //   // Node *q;
+
+
+  //   if(current== nullptr) {
+  //     printf("Linked List not initialized");
+  //     return;
+  //   } 
+
+  //   // current = head;
+  //   while(current!= nullptr && current->getNext() != nullptr) {
+  //       if(current->getTile()->getColour() == tile) {
+  //         std::cout<<current->getTile()->getColour()<<std::endl;
+  //           current->setTile(notile);
+       
+  //       return;
+  //       } 
+        
+  //       else{
+  //         current = current->getNext();
+        
+  //       }
+  //   }
 
 }
 
