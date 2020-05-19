@@ -3,6 +3,8 @@
 #include <string>
 #include <string.h>
 #include "mainGame.h"
+
+
 using namespace std;
 void showMenu();
 void newGame();
@@ -133,6 +135,7 @@ void playTurn(Factory *f1, Board *board)
 }
 void loadGame()
 {
+    mainGame* game = new mainGame();
     cout << "Enter File Name from which load a game: \n";
     cout << ">";
     string fileName;
@@ -142,10 +145,13 @@ void loadGame()
     if (myFile.is_open())
     {
         cout << "Azul game successfully loaded" << endl;
-        while (getline(myFile, line))
-        {
-            cout << line << '\n';
-        }
+        // while (getline(myFile, line))
+        // {
+        //     cout << line << '\n';
+        // }
+        game->LoadGame(fileName);
+
+        myFile.clear();
         myFile.close();
     }
     else
@@ -173,27 +179,36 @@ void credits()
 void quit()
 {
     cout << "Thanks for Playing." << endl;
-    return;
-    // cout<< "Would you like to save the game ? "<<endl;
-    // char choice;
-    // cout<< "Y/N: ";
-    // cin>>choice;
-    // if(choice == 'Y'){
-    //     //TODO
-    //     return;
-    // }
+    // return;
+    cout<< "Would you like to save the game ? "<<endl;
+    char choice;
+    cout<< "Y/N: ";
+    cin>>choice;
+    Board* b = new Board();
+    Factory* f = new Factory();
+    Player* p = new Player("name",4);
+  
+    if(choice == 'Y'){
+      b->makeBoard();
+      f->fillFactory();
+        // board1->addTile(2,"R",3);
+        b->saveBoard("file.txt",f,p);
+        // factory1->saveFactory("file.txt");
+       
+        return;
+    }
 
-    // else if(choice == 'N'){
-    //     cout<<"Thanks for Playing."<<endl;
-    //     return;
-    // }
-    // else
-    // {
+    else if(choice == 'N'){
+        cout<<"Thanks for Playing."<<endl;
+        return;
+    }
+    else
+    {
 
-    //     throw std::invalid_argument("You can only Enter Y or N");
-    //     showMenu();
+        throw std::invalid_argument("You can only Enter Y or N");
+        showMenu();
 
-    // }
+    }
 
     // showMenu();
 }

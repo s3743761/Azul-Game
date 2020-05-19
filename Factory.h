@@ -33,16 +33,8 @@
 #include <iostream>
 #include "LinkedList.h"
 #include "Bag.h"
-#include "Tiles.h"
+// #include "Tiles.h"
 
-//typedef char* a;
-// #define a "B"
-// #define b "L"
-// #define c "U"
-// #define d "Y"
-// #define e "R"
-// #define f "."
-// #define player "F"
 
 class Factory{ 
 public:
@@ -58,8 +50,10 @@ void print();
 
 void getElementAtIndex(Factory *factory,int index,Tiles* tile);
 void removeElement(int i,std::string colour);
-
-int getNumberTiles(int index,char* colour);
+void saveFactory(std::string filename);
+int getNumberTiles(int index,std::string tile);
+void loadFactory(std::string filename);
+void changeTiles(std::string tiles,int i);
 
 private:
 LinkedList* l1;
@@ -70,7 +64,8 @@ LinkedList* l5;
 LinkedList* l6;
 // LinkedList* factories;
 int num;
- LinkedList* factory[5];
+LinkedList* factory[5];
+LinkedList* Loadfactory[5];
  int random(int min, int max);
 
 

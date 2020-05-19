@@ -163,7 +163,7 @@ void LinkedList::printLine()
     current = current->getNext();
   }
 
-  if (head->getNext() == nullptr)
+  if (head == nullptr)
   {
     std::cout << head->getTile()->getTileDetails();
   }
@@ -206,32 +206,79 @@ void LinkedList::removeElement(std::string tile){
   //     temp = prev->getNext();
   //   }
   // }
-    Node *temp;
-    Node *prev = NULL;
-    Node *next;
+    // Node *temp;
+    // Node *prev = NULL;
+    // Node *next;
 
-    for (temp = head;  temp != NULL;  temp = next) {
-        next = temp->getNext();
+    // for (temp = head;  temp != NULL;  temp = next) {
+    //     next = temp->getNext();
 
-        if (temp->getTile()->getColour() != tile) {
-            prev = temp;
-            continue;
+    //     if (temp->getTile()->getColour() != tile) {
+    //         prev = temp;
+    //         continue;
+    //     }
+
+    //     if (prev != NULL && prev->getNext() != NULL ) 
+    //         prev->setNext(next);
+    //     else
+    //         head = next;
+
+    //     delete temp;
+    // }
+
+    // Node *temp;
+    // temp = head;
+  
+    //   while(temp != NULL ){
+    //     if(temp->getTile()->getColour() == tile){
+    //       temp->getTile()->setColour(notile);
+    //     }
+        
+    //     else{
+    //       temp = temp->getNext();
+    //     }
+    //   }
+
+
+    // }
+
+
+
+
+Node* current{ head };
+Node* prev{ nullptr };
+    while (current != NULL) {
+        // Use a nested while loop to check for the condition.  
+        // This simplifies the conditions for the outer loop.
+        while (current->getTile()->getColour() == tile) {
+           
+            Node* oldCurrent = current;
+            current = current->getNext();
+            std::cout<<current->getTile()->getColour()<<std::endl;
+            // If this is the head element, update the head value for the caller
+            if (oldCurrent == head) {
+                head = current;
+            }
+            // Update the previous element in the list, if any
+            if (prev) {
+              //  std::cout<<prev->getTile()->getColour()<<std::endl;
+                prev->setNext(current);
+            }
+            // delete the removed element
+            delete oldCurrent;
         }
-
-        if (prev != NULL)
-            prev->setNext(next);
-        else
-            head = next;
-
-        delete temp;
+        prev = current;
+        // std::cout<<prev->getTile()->getColour()<<std::endl;
+        current = current->getNext();
+        // std::cout<<current->getTile()->getColour()<<std::endl;
     }
 
-
-
-
-
-
-    // int pos = 0;
+// pCur now is excluded from the list
+//  temp1 = head->getNext();
+  
+    // free(temp); 
+  
+    
    
     // Node *current,*store;
     // current = head;
@@ -260,4 +307,3 @@ void LinkedList::removeElement(std::string tile){
   //   }
 
 }
-

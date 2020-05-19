@@ -25,7 +25,6 @@ public:
    int returnSize();
    void swapNodes(int from, int to);
    void removeElement(std::string);
-
    void printLine();
    Tiles* getElement(LinkedList* factory,int i,Tiles* tile);
      // void getElement(int index);

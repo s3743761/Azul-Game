@@ -23,11 +23,12 @@
 
 #include <random>
 #include <string>
-//#include <string>
+#include <fstream>
 #include <algorithm>
-// #include "Tiles.h"
+#include <stdio.h>
 #include "Factory.h"
 #include <chrono>
+#include <iostream>
 
 #define numFactory 4
 
@@ -96,22 +97,44 @@ LinkedList *Factory::getList()
     return nullptr;
 }
 
-int Factory::getNumberTiles(int index,char* p )
+int Factory::getNumberTiles(int index,string tile )
 {
     int count =0;
     LinkedList* factory[6] = {l1,l2,l3,l4,l5,l6};
     if(factory[index]!=nullptr){
         for(int i=0; i<factory[index]->returnSize();i++){
-            if(strcmp(factory[index]->findNode(i)->getTile()->getColour(),p)==0){
-                
+             if(factory[index]->findNode(i)->getTile()->getColour()==tile){
                 count+=1;
-
             }
 
         }
     }
     return count;
 }
+
+void Factory::changeTiles(std::string tiles,int i){
+    int count = getNumberTiles(i,tiles);
+    int newCount = 0;
+    // Tiles *t7 = new Tiles(notile);
+     LinkedList* factory[6] = {l1,l2,l3,l4,l5,l6};
+    if(factory[i]!=nullptr){
+        for(int p=0; p<factory[i]->returnSize();p++){
+            if(factory[i]->findNode(p)->getTile()->getColour() == tiles && newCount < count ){
+                    factory[i]->findNode(p)->getTile()->setColour(notile);
+                    newCount++;
+            }
+           
+                
+
+            
+            
+
+        }
+    }
+    
+
+}
+
 
 int Factory::getSize()
 {
@@ -182,9 +205,71 @@ void Factory::getElementAtIndex(Factory *fact, int index,Tiles* tile)
 
 void Factory::removeElement(int i,std::string colour){
     LinkedList *factory[6] = {l1, l2, l3, l4, l5, l6};
-    
+    // for (int p = 0 ; p < 6;p++){
+    //     if(i == p){
+    //         if(factory[i] != nullptr && factory[i]->returnSize() >=4){
+    //             factory[i]->removeElement(i,colour);
+    //         }
+    //     }
+    // }
     if(factory[i] != nullptr){
         factory[i]->removeElement(colour);
+    
+    }
+   
+}
+
+void Factory::saveFactory(std::string filename){
+    LinkedList *factory[6] = {l1, l2, l3, l4, l5, l6};
+    ofstream of;
+    int count =0;
+    of.open(filename,ios::app|ios::out);
+    for(int i=0; i<6; i++){
+        for(int j=0; j<5; j++){
+            Node* temp = factory[i]->findNode(j);
+
+        if(!of){
+            // cout<<"Error"<<endl;; 
+        }
+        
+        else{
+            while(temp!=NULL && count<getNumberTiles(0,factory[0]->findNode(0)->getTile()->getColour())){
+                for(int l=0; l<6; l++){
+                    of<<l<<": ";  
+                    for(int k=0; k<4; k++){    
+                        of<<factory[l]->findNode(k)->getTile()->getColour()<<" ";
+                    }
+                
+                    of<<endl;
+                }
+                count+=1;
+            }
+
+        }
+    
+        of.close();
+        }
+    }
+}
+
+void Factory::loadFactory(std::string filename){
+
+    string line;
+    ifstream myFile(filename);
+    // LinkedList *factory[6] = {l1, l2, l3, l4, l5, l6};
+    if (myFile.is_open())
+    {
+   
+        for (int lineno = 0; getline(myFile,line) && lineno < 7; lineno++){
+
+            if (lineno < 6){
+               cout<<line<<endl;
+            }
+        }
+    
+
     }
 
 }
+
+
