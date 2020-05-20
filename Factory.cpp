@@ -60,9 +60,9 @@ void Factory::fillFactory()
     Tiles *t4 = new Tiles(Black);
     Tiles *t5 = new Tiles(Yellow);
     Tiles *t6 = new Tiles(Red);
-    Tiles *t7 = new Tiles(notile);
+   // Tiles *t7 = new Tiles(notile);
     
-    std::vector<Tiles *> tileVector = {t2, t3, t4, t5, t6, t7};
+    std::vector<Tiles *> tileVector = {t2, t3, t4, t5, t6};
 
     LinkedList *factory[6] = {l1, l2, l3, l4, l5, l6};
    
@@ -70,14 +70,11 @@ void Factory::fillFactory()
     {
         for (int j = 0; j < 4; j++)
         {
-  
-
             unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 
             std::shuffle(tileVector.begin(), tileVector.end(), std::default_random_engine(seed));
             factory[i]->addNode(tileVector[j]);
 
-           
         }
     }
     
@@ -149,10 +146,14 @@ int Factory::getSize()
 void Factory::print()
 {
     LinkedList *factory[6] = {l1, l2, l3, l4, l5, l6};
+    factory[0]->printLine();
+    
     for (int i = 0; i < 6; i++)
     {
-        std::cout << i << ": ";
-        factory[i]->printLine();
+        if(i >= 1){
+            std::cout << i << ": ";
+            factory[i]->printLine();
+        }
     }
 }
 
@@ -260,11 +261,12 @@ void Factory::loadFactory(std::string filename){
     if (myFile.is_open())
     {
    
-        for (int lineno = 0; getline(myFile,line) && lineno < 7; lineno++){
-
-            if (lineno < 6){
-               cout<<line<<endl;
-            }
+        for (int lineno = 0; getline(myFile,line) && lineno < 6; lineno++){
+            
+            // if (lineno < 6){
+                cout<<line<<endl;
+            // loadFactory[lineno] = line;
+            // }
         }
     
 

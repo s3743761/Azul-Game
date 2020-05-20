@@ -23,7 +23,7 @@ void Board::makeBoard()
 
 
 
-    int size = 11;
+    int size = 12;
     int rows = 5;
     int val = rows - 2;
     for (int i = 0; i < rows; i++)
@@ -43,7 +43,7 @@ void Board::makeBoard()
             }
             else
             {
-                if (j == 5)
+                if (j >= 5 && j <= 6)
                 {
                    board[i][j] = AREA;
                 }
@@ -56,64 +56,35 @@ void Board::makeBoard()
     }
 }
 
-// making a baord using vector
 
-void ::Board::printBoard()
+
+void Board::printBoard()
 {
     int rows = 5;
     for (int i = 0; i < rows; i++)
     {
         std::cout << i + 1 << ": ";
-        for (int j = 0; j < 11; j++)
+        for (int j = 0; j < 12; j++)
         {
-            std::cout << board[i][j];
+            std::cout << board[i][j]<<" ";
         }
         std::cout << std::endl;
     }
 }
 
-const char **Board::getBoard()
-{
-    return *board;
-}
-
-// vector<vector<const char *>> Board::getNewBoard()
+// const char **Board::getBoard()
 // {
-//     return newBoard;
+//     return *board;
 // }
 
-// void Board::addTileOnBoard(int val,Tiles* tile){
-//     for(int i=0; i<6; i++){
-//         for(int j=0; j<11; j++){
-//            if(i==val){
-//             newBoard[i][j] = "K";
-//            }
-//         }
-//     }
-// }
-
-// void Board::printVectorBoard()
-// {
-//     int rows = 5;
-//     // columns=5;
-//     for (int i = 0; i < rows; i++)
-//     {
-//         std::cout << i + 1 << ": ";
-//         for (int j = 0; j < 11; j++)
-//         {
-//             std::cout << newBoard[i][j];
-//         }
-//         std::cout << std::endl;
-//     }
-// }
 
 int Board::getEmptyRowSize(int val)
 {
     int value =0,size=11;
     for(int i=0;i<6; i++) {
-        for(int j=0; j<11; j++){
+        for(int j=0; j<12; j++){
             
-            if(i==val && strcmp(board[i][j], ".")==0 && j<(size-1)/2) {
+            if(i==val && board[i][j] == '.' && j<(size-1)/2) {
                 value+=1;
             }
         }
@@ -121,7 +92,8 @@ int Board::getEmptyRowSize(int val)
     return value;
 }
 
-void Board::addBrokenTile(int count, int value, std::string tile){
+
+void Board::addBrokenTile(int count, int value, char tile){
 
     if(count>value){
         int newSize = (count-value);
@@ -146,45 +118,20 @@ void Board::addBrokenTile(int count, int value, std::string tile){
     }
 
 }
-    
-    // if(count>value){
-    //     int newSize = (count-value);
 
-    //     vector<string> broken(newSize);
-
-    //     for(int i=0; i<newSize; i++){
-   
-    //         broken[i] = tile;
-    //     }
-        
-    //     cout<<"broken:";
-    
-    //     for(int i=0; i<newSize; i++){
-    //         cout<<broken[i]<<" ";
-    //     }
-    //     cout<<endl;
-    // }
-    
-    // else{
-   
-    // cout<<"broken:"; 
-    
-    // }
 
 
 bool Board::gameEnd(){
-      int size = 11;
-    // vector<vector<const char*>> board(5,vector<const char*> (11,0));
+    int size = 11;
 
-    // }
-    char const *sandwich = ".";
+
     int newJ = (size +1)/2;
     int rows = 5;
     //int columns = 5;
     // int val = rows - 2;
     for (int i = 0; i < rows; i++) {
         for (int j = newJ; j < size; j++) {
-            if((board[i][j] = sandwich) ){
+            if((board[i][j] = '.') ){
                 return true;
             }
         }
@@ -193,22 +140,13 @@ bool Board::gameEnd(){
 
 }
 
-// vector<const char *> Board::copyBoard(){
-//    vector<const char *> copy;
-//     for (int i  = 0 ; i < 6;++i){
-//         for (int j  = 0 ; j < 11;++j){
-//             copy.push_back(newBoard[i][j]);
 
-//         }
-//     }
-//     return copy;
-// }
 
 bool Board::isEmpty(){
 
     for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 11; j++) {
-            if (strcmp(board[i][j], ".") == 0) {
+        for (int j = 0; j < 12; j++) {
+            if (board[i][j]== '.') {
                 return true;
             }
         }
@@ -229,68 +167,46 @@ bool Board::does_exist(const vector< vector<const char *> >&  v){
     return false;
 }
 
-void Board::addTile(int row,string value,int count){
-    // stringstream geek(row); 
-    // int rowInt = 0; 
-    // geek >>rowInt;
-
-    // stringstream geek(row); 
-    // int rowInt = 0; 
-    // geek >>rowInt;
-   
+void Board::addTile(int row, char value,int count){
+    cout<<"In function:" <<endl;
+    printBoard();
 
     int flag = 0 ;
-    const char *sandwich = ".";
-    const char* c = value.c_str();
+    char sandwich = '.';
     int size = 11; 
-    int val = getEmptyRowSize(row);
+   int val = getEmptyRowSize(row);
 
    
     for(int i  = 0 ; i < 6; i++) {
         for(int j  = 0 ; j < (size -1)/2; j++) {
             if(i == row){
                 if(board[i][j] == sandwich && flag < count){
-                    board[i][j] = c;
+                    board[i][j] = value;
                     flag = flag +1;
-
                 }
-
             }
-
         }
     }
      
     // make_empty(*board,6,(size -1)/2);
+    cout<<"After function:" <<endl;
     printBoard();
     addBrokenTile(count,val,value);
-    addTileOnSquareBoard(row,c);
+    addTileOnSquareBoard(row,value);
     // addBrokenTile(count, empty, value);
 }
 
-// int Board::roundEnd(){
-//     int size = 11;
-//     int count = 0;
-//     char const *sandwich = ".";
-//     int newJ = (size -1)/2;
-//     int rows = 5;
-  
-//     for (int i = 0; i < rows; i++) {
-//         for (int j = 0; j < newJ; j++) {
-//             if(board[i][j] == sandwich){
-//                 count++;
+void Board::setSize(int size){
+    this->size = size;
+}
+int Board::getSize(){
+    return this->size;
+}
 
-//             }
-//         }
-//     }
-
-//     return count;
-// }
-
-void Board::addTileOnSquareBoard(int val, const char* c){
+void Board::addTileOnSquareBoard(int val, char c){
     
     int res;
     res = getEmptyRowSize(val);
-    //cout<<val;
 
     if(res==0){
         cout<<"Enter your choice of column for the next board";
@@ -301,12 +217,12 @@ void Board::addTileOnSquareBoard(int val, const char* c){
 }
 
 bool Board::checkIfBoardFilled(){
-    char const *sandwich = ".";
+   
     int size =11;
     int count =0;
     for(int i=0; i<5; i++){
         for(int j=0; j<(size-1)/2; j++){
-            if(board[i][j]==sandwich){
+            if(board[i][j]=='.'){
                 count+=1;
             }
         }
@@ -321,12 +237,12 @@ bool Board::checkIfBoardFilled(){
     
 }
 
-bool Board::checkTile(int val, string tile){
+bool Board::checkTile(int val, char tile){
     int size = 11;
     for(int i=0; i<5; i++){
         for(int j=0; j<(size-1)/2; j++)
         {
-            if(board[val][j]==tile.c_str()){
+            if(board[val][j]== tile){
                 return true;
             }
         }
@@ -338,11 +254,11 @@ int Board::adjacent(){
 // int currentx = 0;
 // int currenty = 0 ;
     int count = 0;
-    char const *sandwich = ".";
+   
     int size = 11;
     for(int i=0; i<5; i++){
         for(int j=(size-1)/2; j<size; j++) {
-            if(board[i][j] != sandwich){
+            if(board[i][j] != '.'){
                 // currentx = i+1;
                 // currenty = j;
                 // if(board[currentx][currenty] != sandwich){
@@ -377,39 +293,78 @@ void Board::saveBoard(string filename,Factory* factory,Player* p){
 }
 
 void Board::loadBoard(string filename){
-    std::fstream file;
-    string line;
-    file.open(filename);
-    GotoLine(file,7);
-int counter = 0;
-     for(int i=0;i<5;i++){
-        for(int x=0; x< 11; x++){
-            
-            // while()&& (file.good())){
-                if(getline(file,line)){
-                    loadboard[i][x] = line;
-                    counter++;
-                }
-                // cout<<loadboard[i][x]<<endl;
-            // }
-
-        }
-     }
-    file.close();
-    cin.get();
-
     // std::fstream file;
-   
+    // string line;
     // file.open(filename);
     // GotoLine(file,7);
 
-    // for(int i=0;i<5;i++){
-    //     for(int x=0; x< 11; x++){
-    //         file >> loadboard[i][x];
+    // int counter = 0 ;
+    //     for(int i=0;i<5;i++){
+    //         for(int x=0; x< 11; x++){       
+    //             if(getline(file,line) && counter < 5){
+    //                 char* result = new char[line.length()+1];
+    //                 strcpy(result,line.c_str());
+    //                 board[i][x] = result;
+    //                 counter++;
+    //             }
+            
+    //         }
     //     }
-    // }
     // file.close();
+    // cin.get();
+
 }
+
+// void Board::printLoadBoard(){
+//     for(int p=0;p<5;p++){
+//         // std::cout << p + 1 << ": ";
+//         for (int j = 0; j < 11; j++) {
+//             if(board[p][j]!= NULL){
+//                 std::cout << board[p][j]<<endl;
+//             }
+//         }
+        
+//     }
+
+   
+
+// }
+
+void Board::loadBoard2(string filename){
+    std::fstream file;
+    string line;
+    file.open(filename);
+    GotoLine(file,19);
+
+    int counter = 0 ;
+        for(int i=0;i<5;i++){
+            for(int x=0; x< 11; x++){       
+                if(getline(file,line) && counter < 5){
+                    // char* result = new char[line.length()+1];
+                    // strcpy(result,line.c_str());
+                    loadboard[i][x] = line;
+                    counter++;
+                }
+            
+            }
+        }
+    file.close();
+    cin.get();
+
+}
+
+
+void Board::printLoadBoard2(){
+    for(int p=0;p<5;p++){
+        std::cout << p + 1 << ": ";
+        for (int j = 0; j < 11; j++) {
+            std::cout << board[p][j]<<endl;
+        }
+        
+    }
+}
+ 
+
 
 
 std::fstream& Board::GotoLine(std::fstream& file, unsigned int num){
@@ -419,60 +374,12 @@ std::fstream& Board::GotoLine(std::fstream& file, unsigned int num){
     }
     return file;
 }
-
-void Board::printLoadBoard(){
-    for(int p=0;p<5;p++){
-        // std::cout << p + 1 << ": ";
-        for (int j = 0; j < 11; j++) {
-            std::cout << loadboard[p][j]<<endl;
-        }
-        // std::cout << std::endl;
-        
-    }
-}
-
-void Board::loadBoard2(string filename){
-    std::fstream file;
-   
-    file.open(filename);
-    GotoLine(file,18);
-
-    for(int i=0;i<5;i++){
-        for(int x=0; x< 11; x++){
-            file >> loadboard2[i][x];
-        }
-    }
-    file.close();
-}
-
-
-void Board::printLoadBoard2(){
-    for(int p=0;p<5;p++){
-        std::cout << p + 1 << ": ";
-        for (int j = 0; j < 11; j++) {
-            std::cout << loadboard2[p][j];
-        }
-        std::cout << std::endl;
-        
-    }
-}
- 
-    
-void Board::setSize(int size){
-    this->size = size;
-}
-int Board::getSize(){
-    return this->size;
-}
-
-
 int Board::checkTilesHorizontally(int x){
     int size =11;
     int count =0;
-    char const * sandwich = ".";
-    for(int j=(size+1)/2; j<10; j++){
+    for(int j=(size+1)/2; j<11; j++){
       
-           if(board[x][j]==board[x][j+1]&& board[x][j]!=sandwich) 
+           if(board[x][j]==board[x][j+1]&& board[x][j]!= '.') 
            {
             count+=1;
         }
@@ -487,9 +394,8 @@ int Board::checkTilesHorizontally(int x){
 int Board::checkTilesVertically(int y){
    // int size =11;
     int count =0;
-    char const* sandwich = ".";
     for(int i=0; i<5; i++){
-        if(board[i][y]==board[i+1][y] && i+1<5 && board[i+1][y]!=sandwich){
+        if(board[i][y]==board[i+1][y] && i+1<5 && board[i+1][y]!='.'){
             count++;
         }
     }
@@ -500,15 +406,16 @@ int Board::checkTilesVertically(int y){
     return count+1;
 }
 
+
+
 int Board::checkTotaltiles(){
           int size = 11;
       int newJ = (size +1)/2;
       int rows = 5;
-      char const *sandwich = ".";
       int count  =0; 
       for (int i = 0; i < rows; i++) {
-        for (int j = newJ; j < size; j++) {
-            if(board[i][j]!=sandwich){
+        for (int j = newJ; j < 12; j++) {
+            if(board[i][j]!= '.'){
                 count++;
             }
     // int size =11;
@@ -526,4 +433,19 @@ int Board::checkTotaltiles(){
     
 }
 return count;
+}
+
+void Board::sampleMosiac(){
+
+
+    for(int i = 0 ; i < 5; i++){
+        for(int j = 0 ; j < 5; j++){
+            cout<<sample[i][j]<<" ";
+        
+        }
+        cout<<endl;
+
+    }
+
+
 }

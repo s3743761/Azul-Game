@@ -184,15 +184,15 @@ void quit()
     char choice;
     cout<< "Y/N: ";
     cin>>choice;
-    Board* b = new Board();
-    Factory* f = new Factory();
-    Player* p = new Player("name",4);
+    // Board* b = new Board();
+    // Factory* f = new Factory();
+    // Player* p = new Player("name",4);
   
     if(choice == 'Y'){
-      b->makeBoard();
-      f->fillFactory();
-        // board1->addTile(2,"R",3);
-        b->saveBoard("file.txt",f,p);
+    //   b->makeBoard();
+    //   f->fillFactory();
+    //     // board1->addTile(2,"R",3);
+    //     b->saveBoard("file.txt",f,p);
         // factory1->saveFactory("file.txt");
        
         return;

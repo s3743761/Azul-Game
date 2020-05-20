@@ -171,7 +171,7 @@ void LinkedList::printLine()
   std::cout << std::endl;
 }
 
-Tiles *LinkedList::getElement(LinkedList *list, int index,Tiles* tile)
+Tiles *LinkedList::getElement(LinkedList *list, int index, Tiles *tile)
 {
 
   // Tiles *tile = new Tiles("R");
@@ -188,122 +188,34 @@ Tiles *LinkedList::getElement(LinkedList *list, int index,Tiles* tile)
   return nullptr;
 }
 
-void LinkedList::removeElement(std::string tile){
- 
-    // head = dummy->getNext();
+void LinkedList::removeElement(std::string tile)
+{
 
-  // Node *temp = head;
-  // Node *prev = nullptr;
+  Node *current{head};
+  Node *prev{nullptr};
+  while (current != NULL and current->getNext() != NULL) {
 
-  // while(temp != nullptr){
-  //   while(temp!= nullptr && temp->getTile()->getColour() == tile){
-  //     prev = temp;
-  //     temp = temp->getNext();
-  //   }
+    while (current->getTile()->getColour() == tile) {
 
-  //   if(temp == nullptr){
-  //     prev->setNext(temp->getNext());
-  //     temp = prev->getNext();
-  //   }
-  // }
-    // Node *temp;
-    // Node *prev = NULL;
-    // Node *next;
+      Node *oldCurrent = current;
+      current = current->getNext();
 
-    // for (temp = head;  temp != NULL;  temp = next) {
-    //     next = temp->getNext();
+      if (oldCurrent == head){
+        head = current;
+      }
+      // Update the previous element in the list, if any
+      if (prev){
+        prev->setNext(current);
+      }
 
-    //     if (temp->getTile()->getColour() != tile) {
-    //         prev = temp;
-    //         continue;
-    //     }
-
-    //     if (prev != NULL && prev->getNext() != NULL ) 
-    //         prev->setNext(next);
-    //     else
-    //         head = next;
-
-    //     delete temp;
-    // }
-
-    // Node *temp;
-    // temp = head;
-  
-    //   while(temp != NULL ){
-    //     if(temp->getTile()->getColour() == tile){
-    //       temp->getTile()->setColour(notile);
-    //     }
-        
-    //     else{
-    //       temp = temp->getNext();
-    //     }
-    //   }
-
-
-    // }
-
-
-
-
-Node* current{ head };
-Node* prev{ nullptr };
-    while (current != NULL) {
-        // Use a nested while loop to check for the condition.  
-        // This simplifies the conditions for the outer loop.
-        while (current->getTile()->getColour() == tile) {
-           
-            Node* oldCurrent = current;
-            current = current->getNext();
-            std::cout<<current->getTile()->getColour()<<std::endl;
-            // If this is the head element, update the head value for the caller
-            if (oldCurrent == head) {
-                head = current;
-            }
-            // Update the previous element in the list, if any
-            if (prev) {
-              //  std::cout<<prev->getTile()->getColour()<<std::endl;
-                prev->setNext(current);
-            }
-            // delete the removed element
-            delete oldCurrent;
-        }
-        prev = current;
-        // std::cout<<prev->getTile()->getColour()<<std::endl;
-        current = current->getNext();
-        // std::cout<<current->getTile()->getColour()<<std::endl;
+      delete oldCurrent;
     }
 
-// pCur now is excluded from the list
-//  temp1 = head->getNext();
-  
-    // free(temp); 
-  
-    
-   
-    // Node *current,*store;
-    // current = head;
-  //  current = head;
-  //   // Node *q;
+    if (current->getNext() != NULL) {
+      prev = current;
+      current = current->getNext();
+    }
 
-
-  //   if(current== nullptr) {
-  //     printf("Linked List not initialized");
-  //     return;
-  //   } 
-
-  //   // current = head;
-  //   while(current!= nullptr && current->getNext() != nullptr) {
-  //       if(current->getTile()->getColour() == tile) {
-  //         std::cout<<current->getTile()->getColour()<<std::endl;
-  //           current->setTile(notile);
-       
-  //       return;
-  //       } 
-        
-  //       else{
-  //         current = current->getNext();
-        
-  //       }
-  //   }
-
+    // std::cout<<current->getTile()->getColour()<<std::endl;
+  }
 }

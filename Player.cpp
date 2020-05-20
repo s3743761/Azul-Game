@@ -82,29 +82,29 @@ std::fstream& Player::GotoLine(std::fstream& file, unsigned int num){
     return file;
 }
 
-int Player::getLoadPoints1(){
-  return this->loadPoints1;
-}
+// int Player::getLoadPoints1(){
+//   return this->loadPoints1;
+// }
 
-int Player::getLoadPoints2(){
-  return this->loadPoints2;
-}
+// int Player::getLoadPoints2(){
+//   return this->loadPoints2;
+// }
 
-void Player::setloadPoints1(int loadPoints1){
-  this->loadPoints1 = loadPoints1;
-}
+// void Player::setloadPoints1(int loadPoints1){
+//   this->loadPoints1 = loadPoints1;
+// }
 
 
-void Player::setloadPoints2(int loadPoints2){
-  this->loadPoints2 = loadPoints2;
-}
+// void Player::setloadPoints2(int loadPoints2){
+//   this->loadPoints2 = loadPoints2;
+// }
 
 void Player::loPoints1(string filename){
   fstream file(filename);
   GotoLine(file,12);
   int line;
   file>>line;
-  setloadPoints1(line);
+  setPoints(line);
 
 }
 
@@ -113,6 +113,6 @@ void Player::loPoints2(string filename){
   GotoLine(file,24);
   int line;
   file>>line;
-  setloadPoints2(line);
+  setPoints(line);
 
 }
