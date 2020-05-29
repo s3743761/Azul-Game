@@ -157,8 +157,8 @@ void Factory::changeTiles(char tiles,int i){
 }
 
 bool Factory::firstPlayerTileExsists(int central){
-    if(factory[central]->findNode(0)->getTile()->getColour() == 'F'){
-        
+    Node* node = factory[central]->findNode(0);
+    if(node != nullptr && node->getTile()->getColour() == 'F'){
         return true;
     }
     

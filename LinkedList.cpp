@@ -49,7 +49,6 @@
 
     for (int count = 1; count <= index; count++)
     {
-
       temp = temp->getNext();
     }
     return temp;
@@ -192,6 +191,9 @@ void LinkedList::deleteBack()
     Node *current{head};
     Node *prev{nullptr};
 
+    std::cout << "Head: "  << head << std::endl;
+    std::cout << "Tail: "  << tail << std::endl;
+
     while(current != nullptr) {
       if(current->getTile()->getColour() == tile) {
 
@@ -204,8 +206,12 @@ void LinkedList::deleteBack()
               head = nullptr;
               tail = nullptr;
               current = nullptr;
+              std::cout << "Updated Head: " << head << std::endl;
+              std::cout << "Updated Tail: " << tail << std::endl;
+              std::cout << "Updated Current: " << current << std::endl;
             }
             numOfNodes--;
+            std::cout << "Num Nodes: " << numOfNodes << std::endl;
         }
         else if (current == tail) {
             prev->setNext(nullptr);

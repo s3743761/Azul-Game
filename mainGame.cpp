@@ -61,7 +61,7 @@ void mainGame::playGame(){
     std::cout << "\n=== Start Round ===" << std::endl;
 
     factory = new Factory(numberPlayers, numberOfCentral);
-
+    cout<<"here"<<endl;
     if(tileBag->getSize() == 0){
         tileBag->fillBag();
         tileBag->Shuffle();
@@ -85,34 +85,28 @@ void mainGame::playGame(){
     Player* orderPlayers[length];
     Board* orderBoards[length];
 
-    for(int p = 0 ; p < length; p++){
-        orderPlayers[p] = players[p];
-        orderBoards[p] = boards[p];
-    }
+    // for(int p = 0 ; p < length; p++){
+    //     orderPlayers[p] = players[p];
+    //     orderBoards[p] = boards[p];
+    // }
     
     bool gameOver = false;
 
-
-  
     //TODO: make it into a function
     while(!gameOver) {
-        // int order = 1;
-        // for(int p = 0 ; p < length; p++){
-        //         if(players[p]->getFirstPlayer() == 1) {
-        //             orderPlayers[0] = players[p];
-        //             orderBoards[0] = boards[p];
-        //             players[p]->setFirstPlayer(0);
-
-        //         }
-        //         else {
-            
-        //             orderPlayers[order] = players[p];
-        //             orderBoards[order] = boards[p];
-        //             order++;
-        //         }
-        // }
-        // orderPlayers[0] = players[0];
-        // orderBoards[0] = boards[0];
+        int order = 1;
+        for(int p = 0 ; p < length; p++){
+            if(players[p]->getFirstPlayer() == 1) {
+                orderPlayers[0] = players[p];
+                orderBoards[0] = boards[p];
+                players[p]->setFirstPlayer(0);
+            }
+            else {
+                orderPlayers[order] = players[p];
+                orderBoards[order] = boards[p];
+                order++;
+            }
+        }
 
         while(factory->getTotalSize() > 0) {
 
@@ -155,33 +149,42 @@ void mainGame::playGame(){
                             } 
                             else{ 
                                 factory->removeElement(factoryIndex, colour);  
-                                if(factory->getTotalSize() > 0){   
-                                //if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
+                                if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
                                     factory->removeElement(0, 'F');
-                                    //currentPlayer->setFirstPlayer(1);
-                                    //currentPlayer->updatePoints(-1);
-                                    //currentBoard->addBrokenTile(1,0,'F');
+                                    currentPlayer->setFirstPlayer(1);
+                                    currentPlayer->updatePoints(-1);
+                                    currentBoard->addBrokenTile(1,0,'F');
                                 }
                             }
                         }
-                        // else{
-                        //     int multipleCentral;
-                        //     if(factoryIndex != 0 && factoryIndex != 1){
-                        //         cout<< "Enter the Central Factory you want to place the tile: ";
-                        //         cin >>multipleCentral;
-                        //         factory->addRemainingTiles(factoryIndex, colour,multipleCentral); 
-                        //     } 
-                        //     else{ 
-                        //         factory->removeElement(factoryIndex, colour);      
-                        //         if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
-                        //             factory->removeElement(0, 'F');
-                        //             // currentPlayer->setFirstPlayer(1);
-                        //             // currentPlayer->updatePoints(-1);
-                        //             // currentBoard->addBrokenTile(1,0,'F');
-                        //         }
-                        //     }
+                        else{
+                            int multipleCentral;
+                            if(factoryIndex != 0 && factoryIndex != 1){
+                                cout<< "Enter the Central Factory you want to place the tile: ";
+                                cin >> multipleCentral;
+                                while(cin.fail() || multipleCentral < 0 || multipleCentral > 2){
+                                    std::cout << "Incorrect Central Factory, Try Again:" << endl;
+                                    std::cout << "Enter the Central Factory you want to place the tile: ";
+                                    cin.clear();
+                                    cin.ignore(256,'\n');
+                                    cin >> multipleCentral;
+                                }
+                                factory->addRemainingTiles(factoryIndex, colour, multipleCentral); 
+                            } 
+                            else{ 
+                                std::cout << "Remove Element, Factory Index: " << factoryIndex << " Colour: " << colour << endl;
+                                factory->removeElement(factoryIndex, colour); 
+                                std::cout << "Factory Total Size: " << factory->getTotalSize() << std::endl;     
+                               
+                                if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
+                                    factory->removeElement(0, 'F');
+                                    currentPlayer->setFirstPlayer(1);
+                                    currentPlayer->updatePoints(-1);
+                                    currentBoard->addBrokenTile(1,0,'F');
+                                }
+                            }
 
-                        // }
+                        }
                     
                         currentBoard->addTile(row - 1, colour, numberTiles);
                     
