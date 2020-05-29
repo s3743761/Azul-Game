@@ -1,59 +1,42 @@
 
 
-// #ifndef None
-// #include "Tiles.h"
-// #include <iostream>
-// class Factory{
-//     // Tiles* tiles =  new Tiles();
-// public:
-// int make_bag();
-// void make_factory();
-// void reset_factory();
-
-// private:
-// Tiles* tiles;
-// // int num;
-
-// //     int total = sizeof(tiles->getIndexTiles(0))*20 + sizeof(tiles->getIndexTiles(1))*20 + sizeof(tiles->getIndexTiles(2))*20 +  
-// //     sizeof(tiles->getIndexTiles(3))*20 + sizeof(tiles->getIndexTiles(4))*20 + sizeof(tiles->getIndexTiles(5))*20 + sizeof(tiles->getIndexTiles(6))*20 ;
-// //     random_shuffle(total,total);
-// //     return total;
-    
-// // }
-
-
-
-
-// };
-// #endif
-
-#ifndef ASSIGN2_BAG_H
-#define ASSIGN2_BAG_H
+#ifndef ASSIGN2_H
+#define ASSIGN2_H
 
 #include <iostream>
 #include "LinkedList.h"
 #include "Bag.h"
-// #include "Tiles.h"
+
 
 
 class Factory{ 
 public:
 
-Factory();
-void fillFactory();
+Factory(int numberOfPlayers,int numberOfCentral);
+void fillFactory(Bag* tileBag);
+
+
 
 LinkedList* getList();
 void addFactory(Factory *factory);
 int getSize();
 void Shuffle();
 void print();
+std::string returnAsString();
 
 void getElementAtIndex(Factory *factory,int index,Tiles* tile);
-void removeElement(int i,std::string colour);
-void saveFactory(std::string filename);
-int getNumberTiles(int index,std::string tile);
-void loadFactory(std::string filename);
-void changeTiles(std::string tiles,int i);
+void removeElement(int i,char colour);
+int getNumberTiles(int index,char tile);
+void loadFactory(std::string* factoryStrings);
+void changeTiles(char tiles,int i);
+void placeTileInZero(char tile,int central);
+void fillStatic();
+void deleteAll(int i);
+void addRemainingTiles(int index, char selectedColour,int central);
+int getTotalSize();
+bool firstPlayerTileExsists(int central);
+void staticFactory();
+void printStatic();
 
 private:
 LinkedList* l1;
@@ -62,11 +45,17 @@ LinkedList* l3;
 LinkedList* l4;
 LinkedList* l5;
 LinkedList* l6;
+LinkedList* l7;
 // LinkedList* factories;
 int num;
-LinkedList* factory[5];
+LinkedList** factory;
 LinkedList* Loadfactory[5];
- int random(int min, int max);
+LinkedList* test[8];
+int random(int min, int max);
+
+int numberPlayers;
+int numberCentral;
+int totalFactories;
 
 
 

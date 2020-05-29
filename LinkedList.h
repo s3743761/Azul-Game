@@ -5,17 +5,16 @@
 #include "Node.h"
 
 
+
 class LinkedList {
 public:
 
    LinkedList();
    ~LinkedList();
 
-   //only adds node at the end
+
    void addNode(Tiles* a);
-   //find the Node
    Node* findNode(int f);
-   //only deletes node of where it is
    void deleteNode(int i);
    void deleteBack();
    void deleteFront();
@@ -23,18 +22,22 @@ public:
    void addFront(Tiles* data);
    void addAt(int i, Node* data);
    int returnSize();
-   void swapNodes(int from, int to);
-   void removeElement(std::string);
+   void removeElement(char tile);
    void printLine();
+   std::string returnAsString();
    Tiles* getElement(LinkedList* factory,int i,Tiles* tile);
-     // void getElement(int index);
+   void deleteAll();
 
-
-private:
-   NodePtr head;
-   NodePtr current;
+NodePtr head;
+ NodePtr current;
    NodePtr tail;
    int numOfNodes;
+
+private:
+   // NodePtr head;
+   // NodePtr current;
+   // NodePtr tail;
+   // int numOfNodes;
 };
 
 #endif // ASSIGN2_LINKEDLIST_H

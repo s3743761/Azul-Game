@@ -43,14 +43,7 @@ int Player::tilesinhand()
   return list->returnSize();
 }
 
-void Player::fillHand(Factory* factory) {
-    
-    for (int i = 0; i < 6; i++) {
-     
-      factory->fillFactory();
-   
-    }
-}
+
 
 void Player::winner(Player* player1, Player* player2){
   if(player1->getPoints() > player2->getPoints() ){
@@ -63,14 +56,17 @@ void Player::winner(Player* player1, Player* player2){
 
 void Player::updatePoints(int val){
   int currpoints =this->points -val;
-  std::cout<< "These " << currpoints<< endl;
   setPoints(currpoints);
 } 
 
 void Player::savePlayer(string filename){
   ofstream of;
   of.open(filename,ios::app|ios::out);
+  of<<"#Player "<<'\n';
+  of << name;
+  of<<endl;
   of << points;
+  of<<'\n';
 
 }
 
@@ -82,37 +78,46 @@ std::fstream& Player::GotoLine(std::fstream& file, unsigned int num){
     return file;
 }
 
-// int Player::getLoadPoints1(){
-//   return this->loadPoints1;
-// }
 
-// int Player::getLoadPoints2(){
-//   return this->loadPoints2;
-// }
-
-// void Player::setloadPoints1(int loadPoints1){
-//   this->loadPoints1 = loadPoints1;
-// }
-
-
-// void Player::setloadPoints2(int loadPoints2){
-//   this->loadPoints2 = loadPoints2;
-// }
-
-void Player::loPoints1(string filename){
+void Player::loadName(string filename){
   fstream file(filename);
-  GotoLine(file,12);
-  int line;
+  GotoLine(file,6);
+  string line;
   file>>line;
-  setPoints(line);
+  setName(line);
+}
+
+
+void Player::loadName2(string filename){
+  fstream file(filename);
+  GotoLine(file,23);
+  string line;
+  file>>line;
+  setName(line);
 
 }
 
-void Player::loPoints2(string filename){
+void Player::loadPoints1(string filename){
+  fstream file(filename);
+  GotoLine(file,7);
+  int line;
+  file>>line;
+  setPoints(line);
+}
+
+void Player::loadPoints2(string filename){
   fstream file(filename);
   GotoLine(file,24);
   int line;
   file>>line;
   setPoints(line);
 
+}
+
+void Player::setFirstPlayer(int firstPlayer){
+  this->firstPlayer = firstPlayer;
+}
+
+int Player::getFirstPlayer(){
+  return this->firstPlayer;
 }

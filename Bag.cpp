@@ -1,5 +1,11 @@
 #include "Bag.h"
+#include <iostream>
 #include <random>
+#include <fstream>
+#include <iomanip>
+#include <fstream>
+using std::ofstream;
+
 
 Bag::Bag()
 {
@@ -11,48 +17,42 @@ void Bag::fillBag()
     tiles = new LinkedList();
 
     Tiles *t;
+    for(int i = 0; i < 20; i++) {
+        t = new Tiles(Red);
+        tiles->addNode(t);
+    }
 
-    for (int i = 0; i < 3; i++)
-    {
-        for (int i = 1; i <= 6; i++)
-        {
+    for(int i = 0; i < 20; i++) {
+        t = new Tiles(Yellow);
+        tiles->addNode(t);
+    }
 
-            t = new Tiles(firstplayer);
-            tiles->addNode(t);
+    for(int i = 0; i < 20; i++) {
+        t = new Tiles(DarkBlue);
+        tiles->addNode(t);
+    }
 
-            t = new Tiles(Red);
-            tiles->addNode(t);
+    for(int i = 0; i < 20; i++) {
+        t = new Tiles(LightBlue);
+        tiles->addNode(t);
+    }
 
-            t = new Tiles(Yellow);
-            tiles->addNode(t);
-
-            t = new Tiles(DarkBlue);
-            tiles->addNode(t);
-
-            t = new Tiles(LightBlue);
-            tiles->addNode(t);
-
-            t = new Tiles(Black);
-            tiles->addNode(t);
-        }
+    for(int i = 0; i < 20; i++) {
+        t = new Tiles(Black);
+        tiles->addNode(t);
     }
 }
 
 void Bag::Shuffle()
 {
-    for (int i = 0; i < 108; ++i)
+    for (int i = 0; i < 100; ++i)
     {
-        int rand = random(0, 107);
-        if (rand == 0)
-        {
-            tiles->addBack(tiles->findNode(rand)->getTile());
-            tiles->deleteFront();
-        }
-        else
-        {
-            tiles->addBack(tiles->findNode(rand)->getTile());
-            tiles->deleteFront();
-        }
+        int rand = random(0, 100 - i);
+
+        Node *n = tiles->findNode(rand);
+        tiles->deleteNode(rand);
+        tiles->addBack(n->getTile());
+           
     }
 }
 
@@ -86,4 +86,40 @@ int Bag::random(int min, int max)
         randomNo = uniform_dist(engine);
     }
     return randomNo;
+}
+
+void Bag::saveBag(std::string filename){
+    ofstream of;
+
+    of.open(filename, std::ios::app);
+    of << "#TileBag" << '\n';
+    for (int i = 0; i < 3; i++)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+                for(int j=0; j<6; j++){
+                of<<tiles->findNode(j)->getTile()->getColour();
+                }
+        }
+        
+    }
+    of<<"\n";
+    of.close();
+
+}
+
+
+
+std::string Bag::returnAsString() {
+
+    std::string bagString = ""; 
+
+    for(int i = 0; i < getSize(); i++) {
+        bagString += getList()->findNode(i)->getTile()->getColour();
+    }
+    
+    if(bagString.length() == 0){
+        return "_";
+    }
+    return bagString;
 }

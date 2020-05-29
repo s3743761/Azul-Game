@@ -8,7 +8,7 @@
 #ifndef BLAH_H
 #define BLAH_H
 
-typedef const char* Colour;
+typedef char Colour;
 //typedef string Colour;
 
 class Tiles{

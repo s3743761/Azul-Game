@@ -11,16 +11,18 @@ class mainGame {
 public:
 mainGame();
 void playGame();
-void setRow(int row);
-void setColour(std::string colour);
-void setCount(int count);
-int getRow();
-std::string getColour();
+
+void countpoints(Player* player1, Board* board1);
+
 int getCount();
 int getPlayerNum();
 void setPlayerNum(int playerNumber);
+void saveGame(std::string filename);
 void LoadGame(std::string filename);
-void print(int r, std::string s,int p);
+void help();
+void addPlayer(Player *player);
+void reFill(vector<char> tileLid, Bag* tileBag);
+
 
 
 
@@ -31,7 +33,21 @@ int row;
 std::string colour;
 int count;
 int playerNumber;
-
+Factory* factory;
+std::string player1Name;
+int player1Scores;
+std::string player2Name;
+int player2Scores;
+Bag* tileBag;
+Board* board1;
+Board* board2;
+bool boardsLoaded;
+Player** players;
+Board** boards;
+int length;
+string playerName;
+int playerScores;
+vector<char> bagLid;
 
 
 };

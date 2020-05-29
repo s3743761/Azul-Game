@@ -15,10 +15,14 @@ void Shuffle();
 Node* pickFromBag();
 LinkedList* getList();
 int getSize();
+int random(int min, int max);
+void saveBag(std::string filename);
+void removeFromBag(Tiles* tile);
+std::string returnAsString() ;
 
 private:
 LinkedList* tiles;
-int random(int min, int max);
+
 };
 
 #endif

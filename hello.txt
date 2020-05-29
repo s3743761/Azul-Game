@@ -1,0 +1,41 @@
+# Bag
+RYBBBUURRUUYURUYUBLLBLLUUUUBULBLLBBLLLBBULBUBBUUUBULBLUBULUBURULLUBUUBRULURLUBBUULUULRUBUUULUULBUBUU
+# Lid: 
+_ 
+# Factories: 
+U Y R
+
+
+
+
+R Y L B
+# Player1 name: 
+A
+# Player2 name: 
+B
+# Player1 points: 
+0
+# Player2 points: 
+0
+# Player1 board: 
+        . | | 
+      Y Y | | 
+    L L . | | 
+  Y Y Y Y | | 
+. . . . . | | 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+# Player2 board: 
+        . | | 
+      L L | | 
+    B B . | | 
+  . . . . | | 
+. . . . . | | 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 

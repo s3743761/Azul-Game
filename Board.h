@@ -32,10 +32,13 @@ bool does_exist(const vector< vector<const char *> >&  v);
 void addTile(int row,char value,int count);
 bool checkIfBoardFilled();
 int adjacent();
-void saveBoard(string filename,Factory* factory,Player* player);
+std::string returnTriangleAsString();
+std::string returnWallAsString();
+void saveBroken(string filename);
 bool checkTile(int val, char tile);
-void loadBoard(string filename);
-void loadBoard2(string filename);
+void loadBoard(std::string* triangle, std::string* wall);
+// void loadBoard2(string filename);
+void removeTileFromBoard(vector<char> &bagLid);
 std::fstream& GotoLine(std::fstream& file, unsigned int num);
 void printLoadBoard();
 void printLoadBoard2();
@@ -45,6 +48,13 @@ int checkTilesHorizontally(int x);
 int checkTilesVertically(int y);
 int checkTotaltiles();
 void sampleMosiac();
+bool checkTileInMosiac(int row,char tile);
+bool checkForSimilarTiles(int val);
+void addPoints(Player* player,Board* board);
+void saveLid(string fileName);
+void placeTileAtLast();
+void testfunc(char outStr);
+std::vector<char> getLid();
 
 
 private:
@@ -62,6 +72,8 @@ char board[5][12];
 string loadboard[5][11];
 // string loadboard2[];
 const Tiles* tileBoard[5][11];
+
+std::vector<char> broken;
 // std::vector<std::vector<const char*>> newBoard = std::vector<std::vector<const char*>> (5,std::vector<const char*> (11,0));
 
 

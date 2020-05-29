@@ -23,6 +23,8 @@ void playTurn(Factory *f, Board *board);
 
 int main(int argc, char *argv[])
 {
+    
+    
     for (int i = 0; i < argc; i++)
     {
         if (strcmp(argv[i], "-s") == 0)
@@ -32,6 +34,63 @@ int main(int argc, char *argv[])
     }
 
     return 0;
+   
+    // Factory* f = new Factory(3,2);
+    // // Bag* b= new Bag();
+    // // b->fillBag();
+    // // f->fillFactory(b);
+    // f->staticFactory();
+    //  int b1[2][2] = {{2,3},
+    //                 {3,4},};
+     
+    //  int b2[2][2] = {{5,6},
+    //                 {8,7},};
+     
+    // int b3[2][2] = {{9,1},
+    //                 {2,5},};
+    // int j;
+    // for(int i=0; i<2 ;i++) {
+    //     cout<<i+1<<": ";
+    //     for(j=0; j<2; j++) {
+      
+    //         cout<<b1[i][j]<<" ";
+    //     }
+    //     cout<< " ";
+  
+    //     for(j=0; j<2; j++) {
+    //         cout<<b2[i][j]<<" ";
+    //     }
+    //     cout<< " ";
+   
+    //     for(j=0; j<2; j++) {
+    //         cout<<b3[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+
+
+
+    // f->printStatic();
+    // b->addTile(0,'U',1);
+    //  f->printStatic();
+    // b->addTile(1,'B',2);
+    //  f->printStatic();
+    // b->addTile(2,'Y',3);
+    //  f->printStatic();
+    // int factoryIndex = f->getNumberTiles(0,'L');
+    // cout<<"Number"<<factoryIndex<<endl;
+    // f->removeElement(0, 'L');    
+    // if(f->getTotalSize() > 0 && f->firstPlayerTileExsists(factoryIndex) == true){
+    //         f->removeElement(factoryIndex, 'F');                      
+    // }
+    // b->addTile(3,'L',factoryIndex);
+    // b->printBoard();
+    // f->printStatic();
+
+
+    
+
+
 }
 
 void showMenu()
@@ -77,67 +136,24 @@ void showMenu()
     if (choice != "1" && choice != "2" && choice != "3" && choice != "4")
     {
         cout << "Incorrect Option, please choose from the menu given" << endl;
+        showMenu();
     }
 }
 
 void newGame()
 {
     mainGame* game = new mainGame();
-    cout<<"Enter a name for player 1"<<endl;
-    string name1,name2;
-    cout<<">";
-    std::getline(std::cin >> std::ws, name1);
-    cout<<"Enter a name for player 2"<<endl;
-    cout<<">";
-    std::getline(std::cin >> std::ws, name2);
-
-    cout<<"\nLet's Play!"<<endl;
-    cout<<"\n=== Start Round ==="<<endl;
-    //printBoard();
+    
     game->playGame();
     showMenu();
 }
 
-void playTurn(Factory *f1, Board *board)
-{
-   
-    // cout << endl;
-    // cout << "> turn";
-    // int input1, input3;
-    // string input2;
 
-
-    // cin >> input1;
-    // cin >> input2;
-
-    // cin >> input3;
-    // cout<<input1;
-    //  cout<<input2;
-    //   cout<<input3;
-
-   
-    // // char cstr[input2.size() + 1];
-    // // strcpy(cstr, input2.c_str());
-    
-    // int val = f1->getNumberTiles(input1, input2);
-    // board->addTile(input3 - 1, input2, val);
-    // cout << endl;
-
-    // // cout << input1 << "" << input3;
-    // // cout << endl;
-
-   
-    // // std::cout << val << std::endl;
-    
-
-    // f1->removeElement(input1,input2);
-   
-}
 void loadGame()
 {
     mainGame* game = new mainGame();
     cout << "Enter File Name from which load a game: \n";
-    cout << ">";
+    cout << "> ";
     string fileName;
     string line;
     cin >> fileName;
@@ -187,13 +203,17 @@ void quit()
     // Board* b = new Board();
     // Factory* f = new Factory();
     // Player* p = new Player("name",4);
-  
+    // Bag* bag = new Bag();
+    // bag->fillBag();
     if(choice == 'Y'){
-    //   b->makeBoard();
-    //   f->fillFactory();
-    //     // board1->addTile(2,"R",3);
-    //     b->saveBoard("file.txt",f,p);
-        // factory1->saveFactory("file.txt");
+        // f->fillFactory();
+        // f->saveFactory("file.txt");
+        // bag->fillBag();
+        // bag->saveBag("file.txt");
+        // b->saveLid("file.txt");
+        // b->makeBoard();
+        // b->saveMain("file.txt",f,p,bag);
+       
        
         return;
     }

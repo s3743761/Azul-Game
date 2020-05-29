@@ -22,20 +22,24 @@ void winner(Player* player1,Player* player2);
 void updatePoints(int val);
 void savePlayer(string filename);
 std::fstream& GotoLine(std::fstream& file, unsigned int num);
-void loPoints1(string filename);
-void loPoints2(string filename);
+void loadName(string filename);
+void loadName2(string filename);
+void loadPoints1(string filename);
+void loadPoints2(string filename);
 void setloadPoints1(int loadPoints1);
 void setloadPoints2(int loadPoints2);
 int getLoadPoints1();
 int getLoadPoints2();
+void setFirstPlayer(int firstPlayer);
+int getFirstPlayer();
+
 
 
 private:
 
 string name;
 int points;
-int loadPoints1;
-int loadPoints2;
+int firstPlayer;
 
  LinkedList * list = new LinkedList();
 };
