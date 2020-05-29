@@ -6,31 +6,39 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-Board::Board()
+Board::Board(bool sixTileMode)
 {
+    if(sixTileMode) {
+        rows = 6;
+        columns = 14;
+    }
+    else {
+        rows = 5;
+        columns = 12;
+    }
+    board = new char*[rows];
+    mosaic = new char*[rows];
+    for(int i = 0; i < rows; ++i){
+        board[i] = new char[columns];        
+        mosaic[i] = sixTileMode ? sixTileMosaic[i] : fiveTileMosaic[i];
+        
+    }
 }
+
 Board::~Board()
 {
 }
 
-//making a board usinh 2d array
+
 void Board::makeBoard()
 {
-    // AREA = new Tiles("||");
-    // BLOCK = new Tiles(".");
-    // EMPTY = new Tiles(" ");
-    
-
-
-
-    int size = 12;
-    int rows = 5;
     int val = rows - 2;
     for (int i = 0; i < rows; i++)
     {
-        for (int j = 0; j < size; j++)
+        for (int j = 0; j < columns; j++)
         {
-            if (j < (size - 1) / 2)
+            int midBoard = (columns - 1) / 2;
+            if (j < midBoard)
             {
                 if (j <= val - i)
                 {
@@ -38,18 +46,18 @@ void Board::makeBoard()
                 }
                 else
                 {
-                   board[i][j] = BLOCK;
+                    board[i][j] = BLOCK;
                 }
             }
             else
             {
-                if (j >= 5 && j <= 6)
+                if (j >= midBoard && j <= (midBoard + 1))
                 {
-                   board[i][j] = AREA;
+                    board[i][j] = AREA;
                 }
                 else
                 {
-                   board[i][j] = BLOCK;
+                    board[i][j] = BLOCK;
                 }
             }
         }
@@ -60,11 +68,10 @@ void Board::makeBoard()
 
 void Board::printBoard()
 {
-    int rows = 5;
     for (int i = 0; i < rows; i++)
     {
         std::cout << i + 1 << ": ";
-        for (int j = 0; j < 12; j++)
+        for (int j = 0; j < columns; j++)
         {
             std::cout << board[i][j];
         }
@@ -73,225 +80,90 @@ void Board::printBoard()
 }
 
 
-
-int Board::getEmptyRowSize(int val)
+int Board::getEmptyRowSize(int row)
 {
-    int value =0,size=11;
-    for(int i=0;i<6; i++) {
-        for(int j=0; j<12; j++){
-            
-            if(i==val && board[i][j] == '.' && j<(size-1)/2) {
-                value+=1;
-            }
+    int midBoard = (columns - 1) / 2;
+    int value = 0;
+
+    for(int j = 0; j < columns; j++){
+        if(board[row][j] == BLOCK && j < midBoard){
+            value += 1;
         }
     }
+   
     return value;
 }
 
 
-void Board::addBrokenTile(int count, int value, char tile){
-
-  
-    if(count>value){
-        for(int i=0; i<count-value; i++){
-            broken.push_back(tile);
-        }
-
-        cout<<"broken:";
-        for(unsigned i=0; i<broken.size(); i++){
-        cout<<broken[i]<<" ";
-    }
-    
-        cout<<endl;
-    }
-
-    else{
-        cout<<"broken:";
-            for(unsigned i=0; i<broken.size(); i++){
-                cout<<broken[i]<<" ";
-            }
-        cout<<endl;
-    }
-
-}
-
-
-
-void Board::saveBroken(string fileName){
-    
-    // ofstream of;
-    // of.open(fileName, ios::app);
-    // for(unsigned int i=0; i<broken.size(); i++){
-    //     of<<lid[i];
-    // }
-    // of<<"\n";
-    // of.close();
-}
-
-
-bool Board::gameEnd(){
-    int size = 13;
-    int newJ = (size +1)/2;
-    int rows = 5;
-    
-    for (int i = 0; i < rows; i++) {
-        for (int j = newJ; j < 12; j++) {
-            if((board[i][j] = '.') ){
-                return true;
-            }
-        }
-    }
-    return false;
-
-}
-
-
-
-bool Board::isEmpty(){
-
-    for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 12; j++) {
-            if (board[i][j]== '.') {
-                return true;
-            }
-        }
-    }
-    return false;
-
-
-}
-
-bool Board::does_exist(const vector< vector<const char *> >&  v){
-
-    vector< vector<const char *> >::const_iterator  row; 
-    for (row = v.begin(); row != v.end(); row ++) { 
-        if(find(row->begin(), row->end(), ".") != row->end() ){
-            return true;
-        }
-    }
-    return false;
-}
-
 bool Board::checkTileInMosiac(int row, char tile){
-    int size = 13;
-    int newJ = (size+1)/2;
+    int size = columns + 1;
+    int newJ = (size + 1)/2;
 
-    for(int i  = 0 ; i < 6; i++) {
-        for(int j  = newJ ; j <12; j++) {
-            if(i == row){
-                if(board[row][j] == tile){
-                    return false;
-                }
-            }
+    for(int j  = newJ ; j < columns; j++) {
+        if(board[row][j] == tile){
+            return false;
         }
     }
+    
     return true;
-
 }
 
 
-void Board::addTile(int row, char value,int count){
+
+void Board::placeTileAtLast(){
+    for(int i = 0; i < rows; i++){
+        if(getEmptyRowSize(i) == 0){
+            addTileOnSquareBoard(i, board[i][(columns - 3) / 2]);
+        }
+    }
+}
+
+
+void Board::addTile(int row, char tile,int count){
    
-    int flag = 0 ;
-    char sandwich = '.';
-    int size = 11; 
-   int val = getEmptyRowSize(row);
+    int flag = 0;
+    char sandwich = BLOCK;
+    int val = getEmptyRowSize(row);
 
 
-    if(checkTileInMosiac(row,value) == true){
-        for(int i  = 0 ; i < 6; i++) {
-            for(int j  = 0 ; j < (size -1)/2; j++) {
-                if(i == row){
-                    if(board[i][j] == sandwich && flag < count){
-                        board[i][j] = value;
-                        flag = flag +1;
-                    }
-                }
-            }
+    if(checkTileInMosiac(row, tile) == true){
+        for(int j  = 0 ; j < (columns - 1) / 2; j++) {
+            if(board[row][j] == sandwich && flag < count){
+                board[row][j] = tile;
+                flag = flag + 1;
+            }      
         }
     }
      
     
     printBoard();
-    addBrokenTile(count,val,value);
+    addBrokenTile(count, val, tile);
     cout<<endl;
     
 }
 
-void Board::setSize(int size){
-    this->size = size;
-}
-int Board::getSize(){
-    return broken.size();
-}
 
-void Board::placeTileAtLast(){
-    for(int i=0; i<5; i++){
-        for(int j=0; j<12; j++){
-            if(checkForSimilarTiles(i)==false || getEmptyRowSize(i)==0){
-                addTileOnSquareBoard(i,board[i][j]);
-            }
-        }
-    }
-}
+void Board::addTileOnSquareBoard(int row, char c){
 
-void Board::addTileOnSquareBoard(int val,  char c){
-    int res;
-    res = getEmptyRowSize(val);
-   
-    char jam = '|';
-    if(res==0){
-    int size =12;
-    for(int i=0; i<5; i++){
-        for(int j=(size-1)/2; j<12; j++)
-        {
-            if(board[i][j]!=jam){
-                if(val+7==j && c=='B' && val+7<12){
-                    board[val][j] = DarkBlue;
-                }
-                else if(val+8==j && c=='Y' && val+8<12){
-                    board[val][j] = Yellow;
-                }
-                else if((val+9==j && c=='R' && val+9<12)){
-                    board[val][j] = Red;
-                }
-                else if((val+10==j && c=='U' && val+10<12)){
-                    board[val][j] = Black;
-                }
-                else if((val+11==j && c=='L' && val+11<12)){
-                    board[val][j] = LightBlue;
-                }
-                else if((j-val)==3 && c=='Y')
-                {
-                    board[val][j] = Yellow;
-                }
-                else if((j-val)==4 && c=='R')
-                {
-                    board[val][j] = Red;
-                }
-                else if((j-val)==5 && c=='U')
-                {
-                    board[val][j] = Black;
-                }
-                else if((j-val)==6 && c=='L')
-                {
-                    board[val][j] = LightBlue;
-                }
-                }
-            }
+    int i = 0;
+    for(int j = (columns + 2)/2; j < columns; j++) {
+        if(mosaic[row][i] == c) {
+            board[row][j] = c;
         }
+        i++;
     }
+
 }
 
 
 void Board::removeTileFromBoard(vector<char> &bagLid){
     
-    char  sandwich = '.';
-    char  jam = ' ';
+    char  sandwich = BLOCK;
+    char  jam = EMPTY;
 
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < rows; i++){
         if(getEmptyRowSize(i) == 0){
-            for(int j = 0; j < 5; j++){
+            for(int j = 0; j < (columns - 1 )/2; j++){
        
                 if(board[i][j] != jam){
                     bagLid.push_back(board[i][j]);
@@ -302,129 +174,17 @@ void Board::removeTileFromBoard(vector<char> &bagLid){
         }
     }
     cout<<endl;
-    // cout<<"Lid is:";
-    // for(unsigned i=0; i<lid.size(); i++){  
-    //     cout<<lid[i]<<" ";
-    // }
-    // cout<<endl;
-
-}
-bool Board::checkIfBoardFilled(){
-   
-    int size =13;
-    int count =0;
-    for(int i=0; i<5; i++){
-        for(int j=0; j<(size-1)/2; j++){
-            if(board[i][j]=='.'){
-                count+=1;
-            }
-        }
-    }
-    if(count==0){
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-    
-}
-
-bool Board::checkForSimilarTiles(int val){
-    char jam = '.';
-    for(int i = 0 ; i < 12;i++){
-        for(int j=0; j<5; j++){
-            if(i == val){
-                if(board[val][j] == jam){
-    
-                }
-            }
-        }
-    }
-    return true;
-}
-
-void Board::addPoints(Player* player,Board* board){
-    int points1 = 0;
-  
-    for (int i = 0; i < 5; i++){
-        if (board->checkTilesHorizontally(i) != 5 || board->checkTilesVertically(i) != 5){
-           
-            points1 = board->checkTotaltiles();
-        }
-        if (board->checkTilesVertically(i) == 5){
-            points1 = 7;
-        }
-        if (board->checkTilesHorizontally(i) == 5){
-            points1 = 5;
-        }
-    }
-
-    cout<<endl;
-    cout << "Points: " << points1 << endl;
-    player->setPoints(player->getPoints() + points1);
+ 
 
 }
 
-bool Board::checkTile(int val, char tile){
-    int size = 13;
-    for(int i=0; i<5; i++){
-        for(int j=0; j<(size-1)/2; j++)
-        {
-            if(i == val){   
-                if(board[val][j] == tile){
-                    return true;
-                }
-
-            }
-            
-        }
-    }
-    return false;
-}
-
-
-
-int Board::adjacent(){
-
-    int count = 0;
-   
-    int size = 15;
-    for(int i=0; i<5; i++){
-        for(int j=(size-1)/2; j<12; j++) {
-            if(board[i][j] != '.'){
-
-            }
-
-        }
-    }
-    return count;
-    
-}
-
-void Board::saveLid(string fileName){
-
-    // ofstream of;
-    // of.open(fileName, ios::app);
-    // of<<"Lid"<<'\n';
-    // for (unsigned int i=0; i<lid.size(); i++){
-    //     // if(lid[i] ==  ){
-    //     //     of<<"_";
-    //     // }
-    //     // else{
-    //     of<<lid[i];
-    //     // }
-    // }
-    // of<<"\n";
-    // of.close();
-}
 
 std::string Board::returnTriangleAsString(){
 
     std::string boardString = "";
 
-    for(int i = 0 ; i < 5; i++){
-        for (int j = 0 ; j < 7; j++){
+    for(int i = 0 ; i < rows; i++){
+        for (int j = 0 ; j < (columns + 3) / 2; j++){
             boardString += board[i][j];
             boardString += " ";
         }
@@ -440,8 +200,8 @@ std::string Board::returnWallAsString(){
 
     std::string boardString = "";
 
-    for(int i = 0 ; i < 5; i++){
-        for (int j = 7; j < 12 ;j++){
+    for(int i = 0 ; i < rows; i++){
+        for (int j = (columns + 3) / 2; j < columns ;j++){
             boardString += board[i][j];
             boardString += " ";
         }
@@ -455,115 +215,108 @@ std::string Board::returnWallAsString(){
 
 
 void Board::loadBoard(std::string* triangle, std::string* wall){
-    for(int i = 0 ; i < 5;i++){
-        for(int  j = 0 ; j < 14; j += 2){
-            char c = triangle[i].at(j);            
-            board[i][j/2] = c;
-        }
-    }
+    // for(int i = 0 ; i < rows; i++){
+    //     for(int  j = 0 ; j < columns + 2; j += 2){
+    //         char c = triangle[i].at(j);            
+    //         board[i][j/2] = c;
+    //     }
+    // }
 
-    for(int i = 0 ; i < 5;i++){
-        // std::cout << wall[i] << std::endl;
-        for(int  j = 0 ; j < 10; j+= 2){
-            char c = wall[i].at(j);
-            board[i][j/2 + 7] = c;
+    // for(int i = 0 ; i < 5; i++){
+    //     // std::cout << wall[i] << std::endl;
+    //     for(int  j = 0 ; j < 10; j+= 2){
+    //         char c = wall[i].at(j);
+    //         board[i][j/2 + 7] = c;
             
-        }
-    }
-}
-
-
-
-std::fstream& Board::GotoLine(std::fstream& file, unsigned int num){
-    file.seekg(std::ios::beg);
-    for(int i=0; i < num - 1; ++i){
-        file.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-    }
-    return file;
+    //     }
+    // }
 }
 
 
 int Board::checkTilesHorizontally(int x){
-    int size =13;
-    int count =0;
-    for(int j=(size+1)/2; j<12; j++){
+    int count = 0;
+    for(int j = (columns + 2)/2; j < columns; j++){
       
-           if(board[x][j] != '.') 
-           {
+        if(board[x][j] != BLOCK) {
             count+=1;
-            }
+        }
     }
  
-    if(count ==0){
-        return 0;
-    }
-    else{
-        return count;
-    }
+    return count;
+    
 }
 
+//TODO: see how it gets called in Scoring function
 int Board::checkTilesVertically(int y){
   
-    int count =0;
-    for(int i=0; i<5; i++){
-        if(board[i][y]==board[i+1][y] && i+1<5 && board[i+1][y]!='.'){
+    int count = 0;
+    if(y < (columns - 1) / 2) {
+        return count;
+    }
+
+    for(int i = 0; i < rows; i++){
+        if(board[i][y] != BLOCK && board[i][y] != EMPTY && board[i][y] != AREA ){
             count++;
         }
     }
-    if(count ==0){
-        return 0;
-    }
-   // else
-    return count+1;
+    
+    return count;
 }
 
 
 
 int Board::checkTotaltiles(){
-    int size = 13;
-    int newJ = (size +1)/2;
-    int rows = 5;
-    int count  =0; 
+    int newJ = (columns + 2)/2;
+    int count = 0; 
     for (int i = 0; i < rows; i++) {
-        for (int j = newJ; j < 12; j++) {
-            if(board[i][j] != '.'){
+        for (int j = newJ; j < columns; j++) {
+            if(board[i][j] != BLOCK){
                 count++;
             }
         }
     
     }
-    if(count ==0){
-    return 0;
-    }else{
-        return count;
+
+    return count;
+
+}
+
+void Board::addBrokenTile(int count, int value, char tile){
+
+    if(count > value){
+        for(int i = 0; i <count - value; i++){
+            broken.push_back(tile);
+        }
+
+        cout << "broken:";
+        for(unsigned i = 0; i < broken.size(); i++){
+        cout << broken[i] << " ";
+    }
+    
+        cout << endl;
+    }
+
+    else{
+        cout << "broken:";
+            for(unsigned i = 0; i < broken.size(); i++){
+                cout << broken[i] << " ";
+            }
+        cout << endl;
     }
 
 }
 
-void Board::sampleMosiac(){
+int Board::getSize(){
+    return broken.size();
+}
 
+bool Board::gameOver(){
 
-    for(int i = 0 ; i < 5; i++){
-        for(int j = 0 ; j < 5; j++){
-            cout<<sample[i][j]<<" ";
+    for(int j = 0; j < rows; j++) {
+        if(checkTilesHorizontally(j) == rows){
+            return true;     
+        }
+    }
+    return false;
         
-        }
-        cout<<endl;
-
-    }
-
-}
-
-void Board::testfunc(char outStr){
-    char str[5][12];
-    int rows = 5;
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < 12; j++)
-        {
-            board[i][j] = str[i][j];
-        }
-    }
-
-
 }

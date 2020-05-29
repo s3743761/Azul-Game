@@ -12,16 +12,16 @@ Bag();
 
 void fillBag();
 void Shuffle();
-Node* pickFromBag();
 LinkedList* getList();
 int getSize();
 int random(int min, int max);
-void saveBag(std::string filename);
 void removeFromBag(Tiles* tile);
-std::string returnAsString() ;
+std::string returnAsString();
+void setSixTileMode(bool mode);
 
 private:
 LinkedList* tiles;
+bool sixTileMode;
 
 };
 

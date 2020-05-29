@@ -7,6 +7,7 @@
 #define Black 'U'
 #define Yellow 'Y'
 #define Red 'R'
+#define Orange 'O'
 #define notile '.'
 
 #endif

@@ -74,6 +74,9 @@ void Factory::fillFactory(Bag* tileBag){
             else if(tile == 'L'){
                 t = new Tiles(LightBlue);
             }
+            else if(tile == 'O'){
+                t = new Tiles(Orange);
+            }
             factory[i]->addNode(t);
         }
     }

@@ -26,6 +26,39 @@ mainGame::mainGame(){
 
 void mainGame::playGame(){
     
+    // Board* b = new Board(false);
+    // b->makeBoard();
+    // b->printBoard();
+    // // b->addTile(5, 'O', 6);
+    // b->addTile(0, 'B', 1);
+    // b->addTile(1, 'L', 2);
+    // b->addTile(2, 'U', 3);
+    // b->addTile(3, 'R', 4);
+    // b->addTile(4, 'Y', 5);
+    // b->placeTileAtLast();
+    // b->printBoard();
+    // cout << b->checkTotaltiles() << endl;
+    // cout << b->checkTilesHorizontally(1) << endl;
+    // cout << b->checkTilesHorizontally(2) << endl;
+    // cout << b->checkTilesHorizontally(3) << endl;
+    // cout << b->checkTilesHorizontally(4) << endl;
+
+    // TODO: Board add Orange in placeTileAtLast();
+    // b->removeTileFromBoard(bagLid);
+    // b->printBoard();
+    // cout<<bagLid.size()<<endl;
+    // // b->placeTileAtLast();
+    // // std::cout << b->checkTileInMosiac(1, 'R') << std::endl;
+    
+    // // cout << b->getEmptyRowSize(0) << endl;
+    // // cout << b->getEmptyRowSize(1) << endl;
+    // // cout << b->getEmptyRowSize(2) << endl;
+    // // cout << b->getEmptyRowSize(3) << endl;
+    // // cout << b->getEmptyRowSize(4) << endl;
+    // // cout << b->getEmptyRowSize(5) << endl;
+    // return;
+
+    
     int numberPlayers;
     std::cout << "Enter the number of players playing: ";
     cin >> numberPlayers;
@@ -37,7 +70,6 @@ void mainGame::playGame(){
         cin >> numberPlayers;
     }
     players = new Player*[numberPlayers];
-
 
     for(int i = 0 ; i < numberPlayers;i++){
             string playerName;
@@ -55,17 +87,36 @@ void mainGame::playGame(){
     if(numberPlayers > 2) {
         std::cout<<"Please Enter the number of central factories required: ";
         cin>>numberOfCentral;
-    }
-    
-    std::cout << "\nLet's Play!" << std::endl;
-    std::cout << "\n=== Start Round ===" << std::endl;
+    }    
 
-    factory = new Factory(numberPlayers, numberOfCentral);
-    cout<<"here"<<endl;
+    bool gameType = false;
+    char gameTypeOption;
+    cout<<" Would You Like To Play The 6 Tile Mode (Y/N) ? : ";
+    cin >> gameTypeOption;
+    while(cin.fail() || (gameTypeOption != 'Y' && gameTypeOption != 'N' )){
+        cout<<" Invalid Command, Please Try Again."<<endl;
+        cout<<" Would You Like To Play The 6 Tile Mode (Y/N) ? : ";
+        cin.clear();
+        cin.ignore(256,'\n');
+        cin >> gameTypeOption;
+        
+    }
+    if(gameTypeOption == 'Y'){
+        gameType = true;
+    }
+    else{
+        gameType = false;
+    }
+
     if(tileBag->getSize() == 0){
+       
+        tileBag->setSixTileMode(gameType);
         tileBag->fillBag();
         tileBag->Shuffle();
+      
     }
+
+    factory = new Factory(numberPlayers, numberOfCentral);
 
     if(factory->getTotalSize() == 0) {
         factory->fillFactory(tileBag);
@@ -75,7 +126,7 @@ void mainGame::playGame(){
         boards = new Board*[length];
 
         for(int i = 0 ; i < length; i++){
-            boards[i] = new Board();
+            boards[i] = new Board(gameType);
             boards[i]->makeBoard();    
         }    
     }
@@ -85,12 +136,10 @@ void mainGame::playGame(){
     Player* orderPlayers[length];
     Board* orderBoards[length];
 
-    // for(int p = 0 ; p < length; p++){
-    //     orderPlayers[p] = players[p];
-    //     orderBoards[p] = boards[p];
-    // }
-    
     bool gameOver = false;
+
+    std::cout << "\nLet's Play!" << std::endl;
+    std::cout << "\n=== Start Round ===" << std::endl;
 
     //TODO: make it into a function
     while(!gameOver) {
@@ -152,7 +201,7 @@ void mainGame::playGame(){
                                 if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
                                     factory->removeElement(0, 'F');
                                     currentPlayer->setFirstPlayer(1);
-                                    currentPlayer->updatePoints(-1);
+                                    // currentPlayer->updatePoints(-1);
                                     currentBoard->addBrokenTile(1,0,'F');
                                 }
                             }
@@ -179,7 +228,7 @@ void mainGame::playGame(){
                                 if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
                                     factory->removeElement(0, 'F');
                                     currentPlayer->setFirstPlayer(1);
-                                    currentPlayer->updatePoints(-1);
+                                    // currentPlayer->updatePoints(-1);
                                     currentBoard->addBrokenTile(1,0,'F');
                                 }
                             }
@@ -223,12 +272,10 @@ void mainGame::playGame(){
 
         
         for(int i = 0; i < length; i++) {
-            for(int j = 0; j < 5; j++) {
-                if(boards[i]->checkTilesHorizontally(j) == 5){
-                    
-                    gameOver = true;
-                }
+            if(boards[i]->gameOver() == true){
+                gameOver = true;
             }
+            
         }
         
         if(!gameOver) {
@@ -366,25 +413,26 @@ int mainGame::getPlayerNum(){
 }
 
 
-void mainGame::countpoints(Player* player1, Board* board1){
-  int points1 = 0;
-    for (int i = 0; i < 5; i++){
+void mainGame::countpoints(Player* player, Board* board){
+//   int points1 = 0;
+//     for (int i = 0; i < 5; i++){
        
-        if (board1->checkTilesHorizontally(i) != 5 || board1->checkTilesVertically(i) != 5){
-            points1 = board1->checkTotaltiles();
-        }
+//         if (board1->checkTilesHorizontally(i) != 5 || board1->checkTilesVertically(i) != 5){
+//             points1 = board1->checkTotaltiles();
+//         }
         
-        if (board1->checkTilesVertically(i) == 5){
-            points1 = 7;
-        }
-        if (board1->checkTilesHorizontally(i) == 5){
-            points1 = 5;
-        }
+//         if (board1->checkTilesVertically(i) == 5){
+//             points1 = 7;
+//         }
+//         if (board1->checkTilesHorizontally(i) == 5){
+//             points1 = 5;
+//         }
        
-    }
-      player1->setPoints(points1 - board1->getSize());
+//     }
+//       player1->setPoints(points1 - board1->getSize());
 
-    std::cout << player1->getName() << " points :" << player1->getPoints() << endl;
+//     std::cout << player1->getName() << " points :" << player1->getPoints() << endl;
+       std::cout << player->getName() << " points : " << 0 << endl;
 }
 
 void mainGame::help(){

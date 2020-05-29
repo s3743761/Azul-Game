@@ -41,13 +41,21 @@ void Bag::fillBag()
         t = new Tiles(Black);
         tiles->addNode(t);
     }
+
+    if(this->sixTileMode) {
+        for(int i = 0; i < 20; i++) {
+            t = new Tiles(Orange);
+            tiles->addNode(t);
+        }
+    }
 }
 
 void Bag::Shuffle()
 {
-    for (int i = 0; i < 100; ++i)
+    int totalTiles = this->sixTileMode ? 120 : 100;
+    for (int i = 0; i < totalTiles; ++i)
     {
-        int rand = random(0, 100 - i);
+        int rand = random(0, totalTiles - i);
 
         Node *n = tiles->findNode(rand);
         tiles->deleteNode(rand);
@@ -56,16 +64,14 @@ void Bag::Shuffle()
     }
 }
 
-Node *Bag::pickFromBag()
-{
-    Node *add = tiles->findNode(0);
-    tiles->deleteFront();
-    return add;
-}
-
 LinkedList *Bag::getList()
 {
     return tiles;
+}
+void Bag::setSixTileMode(bool mode){
+    
+    this->sixTileMode = mode;
+
 }
 
 int Bag::getSize()
@@ -87,27 +93,6 @@ int Bag::random(int min, int max)
     }
     return randomNo;
 }
-
-void Bag::saveBag(std::string filename){
-    ofstream of;
-
-    of.open(filename, std::ios::app);
-    of << "#TileBag" << '\n';
-    for (int i = 0; i < 3; i++)
-    {
-        for (int i = 0; i < 6; i++)
-        {
-                for(int j=0; j<6; j++){
-                of<<tiles->findNode(j)->getTile()->getColour();
-                }
-        }
-        
-    }
-    of<<"\n";
-    of.close();
-
-}
-
 
 
 std::string Bag::returnAsString() {
