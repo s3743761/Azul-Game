@@ -30,10 +30,15 @@ void loadBoard(std::string* triangle, std::string* wall);
 int checkTilesHorizontally(int x);
 int checkTilesVertically(int y);
 int checkTotaltiles();
-bool gameOver();
 
+bool checkAdjacent(int i , int j);
 void addBrokenTile(int count, int value, char tile);
 int getSize();
+bool gameOver();
+void placeTileGreyBoard(int i ,int j );
+int getRows();
+char getTile(int i);
+int getColumns();
 
 
 

@@ -280,6 +280,37 @@ int Board::checkTotaltiles(){
     return count;
 
 }
+bool Board::checkAdjacent(int row, int j){
+    
+    char tile =  getTile(row);
+    int midBoard =  (columns - 1)/2; 
+    int col = midBoard + 2;
+
+    if(row < 0 || j < 1) {
+        return false;
+    }
+
+    if(board[row][j + col - 1] != BLOCK){
+        return false;
+    }
+
+    for(int p = col ; p < columns ; p++){
+            
+        if(board[row][p] == tile){    
+            return false;
+        }
+    }
+  
+    for (int i = 0; i < rows; i++) {
+        
+        if(board[i][j + col - 1] == tile){
+            return false;
+        }
+            
+    }
+    return true;
+        
+}
 
 void Board::addBrokenTile(int count, int value, char tile){
 
@@ -319,4 +350,28 @@ bool Board::gameOver(){
     }
     return false;
         
+}
+
+void Board::placeTileGreyBoard(int i, int j ){
+    int midBoard =  (columns - 1)/2;
+
+    if(getEmptyRowSize(i) == 0){
+        if(checkAdjacent(i, j)){
+            board[i][ j + midBoard + 1] = getTile(i);
+        }
+    }
+
+}
+
+int Board::getRows(){
+    return rows;
+}
+
+char Board::getTile(int i){
+    return board[i][(columns - 3) / 2];
+}
+
+int Board::getColumns(){
+    int midBoard =  (columns - 1)/2;
+    return midBoard;
 }

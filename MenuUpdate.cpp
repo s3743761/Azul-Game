@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <string.h>
-#include "mainGame.h"
+#include "Game.h"
 
 
 using namespace std;
@@ -11,15 +11,9 @@ void newGame();
 void loadGame();
 void credits();
 void quit();
-//
+
 void playTurn(Factory *f, Board *board);
-//void printBoard();
-// const char board[5][13] = {{' ',' ',' ',' ', '.' , '|' , '|' , '.','.','.','.','.',},
-//                             {' ',' ',' ','.', '.' ,'|', '|' ,'.','.','.','.','.',},
-//                             {' ',' ','.','.', '.' ,'|', '|' ,'.','.','.','.','.',},
-//                             {' ','.','.','.', '.' ,'|', '|' ,'.','.','.','.','.',},
-//                             {'.','.','.','.', '.' ,'|', '|' ,'.','.','.','.','.',}
-//                             };
+
 
 int main(int argc, char *argv[])
 {

@@ -1,4 +1,4 @@
-#include "mainGame.h"
+#include "Game.h"
 #include <string>
 #include <string.h>
 #include <iostream>
@@ -25,46 +25,15 @@ mainGame::mainGame(){
 }
 
 void mainGame::playGame(){
-    
-    // Board* b = new Board(false);
-    // b->makeBoard();
-    // b->printBoard();
-    // // b->addTile(5, 'O', 6);
-    // b->addTile(0, 'B', 1);
-    // b->addTile(1, 'L', 2);
-    // b->addTile(2, 'U', 3);
-    // b->addTile(3, 'R', 4);
-    // b->addTile(4, 'Y', 5);
-    // b->placeTileAtLast();
-    // b->printBoard();
-    // cout << b->checkTotaltiles() << endl;
-    // cout << b->checkTilesHorizontally(1) << endl;
-    // cout << b->checkTilesHorizontally(2) << endl;
-    // cout << b->checkTilesHorizontally(3) << endl;
-    // cout << b->checkTilesHorizontally(4) << endl;
-
-    // TODO: Board add Orange in placeTileAtLast();
-    // b->removeTileFromBoard(bagLid);
-    // b->printBoard();
-    // cout<<bagLid.size()<<endl;
-    // // b->placeTileAtLast();
-    // // std::cout << b->checkTileInMosiac(1, 'R') << std::endl;
-    
-    // // cout << b->getEmptyRowSize(0) << endl;
-    // // cout << b->getEmptyRowSize(1) << endl;
-    // // cout << b->getEmptyRowSize(2) << endl;
-    // // cout << b->getEmptyRowSize(3) << endl;
-    // // cout << b->getEmptyRowSize(4) << endl;
-    // // cout << b->getEmptyRowSize(5) << endl;
-    // return;
-
-    
+        
     int numberPlayers;
-    std::cout << "Enter the number of players playing: ";
+    std::cout << "Enter the number of players playing:" << std::endl;
+    std::cout << "> ";
     cin >> numberPlayers;
     while(cin.fail() || numberPlayers < 2 || numberPlayers > 4){
-        std::cout << "Incorrect Number of Players, Try Again:" << endl;
-        std::cout << "Enter the number of players playing: ";
+        std::cout << "Incorrect Number of Players, Try Again." << endl;
+        std::cout << "Enter the number of players playing:" << std::endl;
+        std::cout << "> ";
         cin.clear();
         cin.ignore(256,'\n');
         cin >> numberPlayers;
@@ -84,18 +53,25 @@ void mainGame::playGame(){
 
     int numberOfCentral = 1;
     
-    if(numberPlayers > 2) {
-        std::cout<<"Please Enter the number of central factories required: ";
+    std::cout << "Please Enter the number of central factories required (1/2)?"<<endl;
+    std::cout << "> ";
+    cin>>numberOfCentral;
+    while(cin.fail() || (numberOfCentral != 1 || numberOfCentral != '2' )){
+        cout<<"Invalid Number of Central Factories, Try Again."<<endl;
+        std::cout << "Please Enter the number of central factories required (1/2)?"<<endl;
+        std::cout << "> ";
         cin>>numberOfCentral;
-    }    
+    }   
 
     bool gameType = false;
     char gameTypeOption;
-    cout<<" Would You Like To Play The 6 Tile Mode (Y/N) ? : ";
+    cout << "Would You Like To Play The 6 Tile Mode (Y/N)?"<<endl;
+    std::cout << "> ";
     cin >> gameTypeOption;
     while(cin.fail() || (gameTypeOption != 'Y' && gameTypeOption != 'N' )){
-        cout<<" Invalid Command, Please Try Again."<<endl;
-        cout<<" Would You Like To Play The 6 Tile Mode (Y/N) ? : ";
+        cout << "Invalid Command, Please Try Again." << endl;
+        cout<< "Would You Like To Play The 6 Tile Mode (Y/N)?"<<endl;
+        std::cout << "> ";
         cin.clear();
         cin.ignore(256,'\n');
         cin >> gameTypeOption;
@@ -107,6 +83,28 @@ void mainGame::playGame(){
     else{
         gameType = false;
     }
+
+    bool greyTileMode = true;
+    char greyTileCommand;
+    cout << "Would You Like To Play The Grey Board Mode (Y/N)?"<<endl;
+    std::cout << "> ";
+    cin >> greyTileCommand;
+    while(cin.fail() || (greyTileCommand != 'Y' && greyTileCommand != 'N' )){
+        cout << "Invalid Command, Please Try Again."<<endl;
+        cout << "Would You Like To Play The Grey Board Mode (Y/N)?" <<endl;
+        std::cout << "> ";
+        cin.clear();
+        cin.ignore(256,'\n');
+        cin >> greyTileCommand;
+        
+    }
+    if(greyTileCommand == 'Y'){
+        greyTileMode = true;
+    }
+    else{
+        greyTileMode = false;
+    }
+
 
     if(tileBag->getSize() == 0){
        
@@ -262,12 +260,52 @@ void mainGame::playGame(){
 
             
         std::cout << "=== END OF ROUND ===" << std::endl;
-        for(int i = 0 ; i < length ; i++){
-            boards[i]->placeTileAtLast();
-        
-            boards[i]->removeTileFromBoard(bagLid);
-            countpoints(players[i], boards[i]);
-            std::cout << players[i]->getName() << " Total Points :" << players[i]->getPoints() << std::endl;
+
+        if(greyTileMode){
+
+            for(int i = 0 ; i < length ; i ++){
+                cout << "Player Name: " << players[i]->getName() << endl;
+                boards[i]->printBoard();
+                for(int j = 0 ; j < boards[i]->getRows();j++){
+
+                    int greyTileColumn;
+
+                    if(boards[i]->getEmptyRowSize(j) == 0){ 
+
+                        std::cout << "Which column would you like to place tile '" << boards[i]->getTile(j) <<"' from row " << j+1 << " (pick from 1-" << boards[i]->getRows()<< "):" << std::endl;
+                        std::cout << "> ";
+                        cin >> greyTileColumn;
+
+                        std::cout << "Row: " << j << " Column: " << greyTileColumn << endl;
+                        bool checkMove = boards[i]->checkAdjacent(j, greyTileColumn);
+                        // bool checkMove = boards[i]->checkAdjacent(j, greyTileColumn, boards[i]->getTile(j));
+                        std::cout << "Check Move: " << checkMove << endl;
+
+                        while(cin.fail() || greyTileColumn < 1 || greyTileColumn > boards[i]->getRows() || checkMove == false){
+                            cout << "Incorrect Column, Try Again: "<< endl;
+                            cout << "Which column would you like to place tile '" << boards[i]->getTile(j) <<"' from row " << j+1 << " (pick from 1-" << boards[i]->getRows() << "):" << std::endl;
+                            std::cout << "> ";
+                            cin.clear();
+                            cin.ignore(256,'\n');
+                            cin >> greyTileColumn;
+                            checkMove = boards[i]->checkAdjacent(j, greyTileColumn);
+                            std::cout << "Row: " << j << " Column: " << greyTileColumn << endl;
+                            std::cout << "Check Move: " << checkMove << endl;
+                        }
+                        boards[i]->placeTileGreyBoard(j, greyTileColumn);              
+                    }
+                }
+                boards[i]->removeTileFromBoard(bagLid);
+            }
+        }
+        else{
+            for(int i = 0 ; i < length ; i++){
+                boards[i]->placeTileAtLast();
+            
+                boards[i]->removeTileFromBoard(bagLid);
+                countpoints(players[i], boards[i]);
+                std::cout << players[i]->getName() << " Total Points :" << players[i]->getPoints() << std::endl;
+            }
         }
 
         
