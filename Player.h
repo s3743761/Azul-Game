@@ -10,7 +10,7 @@ class Player
 {
 public:
 
-Player(string name, int points);
+Player(int id, string name, int points);
 string getName();
 void setName(string name);
 int getPoints();
@@ -32,6 +32,8 @@ int getLoadPoints1();
 int getLoadPoints2();
 void setFirstPlayer(int firstPlayer);
 int getFirstPlayer();
+int getId();
+void setId(int id);
 
 
 
@@ -40,6 +42,7 @@ private:
 string name;
 int points;
 int firstPlayer;
+int id;
 
  LinkedList * list = new LinkedList();
 };

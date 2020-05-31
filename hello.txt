@@ -1,41 +1,71 @@
-# Bag
-RYBBBUURRUUYURUYUBLLBLLUUUUBULBLLBBLLLBBULBUBBUUUBULBLUBULUBURULLUBUUBRULURLUBBUULUULRUBUUULUULBUBUU
-# Lid: 
-_ 
-# Factories: 
-U Y R
+#Bag
+RRRRRBBBBBLLLLLYYYYYUUUUUOOOOO
+#Lid
+RBUYO
+#Number of Players
+3
+#Number of Central Factories
+2
+#Six Tile Mode
+false
+#Grey Tile Mode
+false
+#Factories
+F Y B R
 
-
-
-
-R Y L B
-# Player1 name: 
+R R R R
+R R R R
+R R R R
+R R R R
+R R R B
+R R R B
+R R R R
+#player who's turn it is
+1
+#round order
+312
+#Player
+1
 A
-# Player2 name: 
+30
+R
+YY
+LLL
+....
+.....
+B....
+.....
+.....
+.....
+.....
+FRYO
+#Player
+2
 B
-# Player1 points: 
+10
+    B
+   YY
+  LLL
+ .... 
+..... 
+Y....
+.....
+.....
+.....
+.....
+_
+#Player
+3
+C
 0
-# Player2 points: 
-0
-# Player1 board: 
-        . | | 
-      Y Y | | 
-    L L . | | 
-  Y Y Y Y | | 
-. . . . . | | 
-. . . . . 
-. . . . . 
-. . . . . 
-. . . . . 
-. . . . . 
-# Player2 board: 
-        . | | 
-      L L | | 
-    B B . | | 
-  . . . . | | 
-. . . . . | | 
-. . . . . 
-. . . . . 
-. . . . . 
-. . . . . 
-. . . . . 
+    B
+   YY
+  UUL
+ .... 
+..... 
+Y....
+.....
+.....
+.....
+.....
+_

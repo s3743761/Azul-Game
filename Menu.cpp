@@ -28,63 +28,6 @@ int main(int argc, char *argv[])
     }
 
     return 0;
-   
-    // Factory* f = new Factory(3,2);
-    // // Bag* b= new Bag();
-    // // b->fillBag();
-    // // f->fillFactory(b);
-    // f->staticFactory();
-    //  int b1[2][2] = {{2,3},
-    //                 {3,4},};
-     
-    //  int b2[2][2] = {{5,6},
-    //                 {8,7},};
-     
-    // int b3[2][2] = {{9,1},
-    //                 {2,5},};
-    // int j;
-    // for(int i=0; i<2 ;i++) {
-    //     cout<<i+1<<": ";
-    //     for(j=0; j<2; j++) {
-      
-    //         cout<<b1[i][j]<<" ";
-    //     }
-    //     cout<< " ";
-  
-    //     for(j=0; j<2; j++) {
-    //         cout<<b2[i][j]<<" ";
-    //     }
-    //     cout<< " ";
-   
-    //     for(j=0; j<2; j++) {
-    //         cout<<b3[i][j]<<" ";
-    //     }
-    //     cout<<endl;
-    // }
-
-
-
-    // f->printStatic();
-    // b->addTile(0,'U',1);
-    //  f->printStatic();
-    // b->addTile(1,'B',2);
-    //  f->printStatic();
-    // b->addTile(2,'Y',3);
-    //  f->printStatic();
-    // int factoryIndex = f->getNumberTiles(0,'L');
-    // cout<<"Number"<<factoryIndex<<endl;
-    // f->removeElement(0, 'L');    
-    // if(f->getTotalSize() > 0 && f->firstPlayerTileExsists(factoryIndex) == true){
-    //         f->removeElement(factoryIndex, 'F');                      
-    // }
-    // b->addTile(3,'L',factoryIndex);
-    // b->printBoard();
-    // f->printStatic();
-
-
-    
-
-
 }
 
 void showMenu()
@@ -151,7 +94,7 @@ void loadGame()
     string fileName;
     string line;
     cin >> fileName;
-    ifstream myFile(fileName);
+    ifstream myFile(fileName + ".txt");
     if (myFile.is_open())
     {
         cout << "Azul game successfully loaded" << endl;

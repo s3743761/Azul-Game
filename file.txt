@@ -1,7 +1,0 @@
-
-0: F 
-1: Y B L U 
-2: R R Y R 
-3: R Y Y Y 
-4: U U R L 
-5: B L L Y 

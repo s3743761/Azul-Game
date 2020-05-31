@@ -1,0 +1,35 @@
+#Bag
+YUROLRBUBUOLBLUORLUORRROOUYRBOBRYUBLYLROLURUULRLYYOOUBBYBYOYYBOBOYRROYOOURBUYLYLYUOBURLBYYOB
+#Lid
+_
+#Number Of Players
+3
+#Six Tile Mode
+true
+#Grey Tile Mode
+false
+#Factories
+F
+U L L B
+O R Y B
+B B Y R
+B U L L
+L R R U
+U O R U
+Y L L L
+#player who's turn it is
+0
+#round order
+123
+#Player
+1
+a
+0
+#Player
+2
+b
+0
+#Player
+3
+c
+0

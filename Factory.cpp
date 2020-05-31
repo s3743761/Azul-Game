@@ -12,46 +12,49 @@
 
 using namespace std;
 
-Factory::Factory(int numberOfPlayers,int numberofCentral)
+Factory::Factory(int numberOfPlayers, int numberofCentral)
 {
-    this->numberPlayers = numberOfPlayers;
+    // this->numberPlayers = numberOfPlayers;
     this->numberCentral = numberofCentral;
+    setTotalFactories(numberOfPlayers, numberofCentral);
     
-    if(this->numberPlayers == 2){
-        totalFactories = 5;
-    }
-    else if(this->numberPlayers == 3){
-        totalFactories = 7;
-    }
-    else{
-        totalFactories = 9;
-    }
-
-    if(this->numberCentral == 1){
-        totalFactories += 1;
-    }
-    else{
-        totalFactories += 2;
-    }
-
     factory = new LinkedList*[totalFactories];
 
     for(int i = 0; i < totalFactories ; i++) {
         factory[i] = new LinkedList();
     }
 
-    for(int i = 0; i < 8; i++) {
-        test[i] = new LinkedList();
-    }
-
-    
 }
 
+void Factory::setTotalFactories(int numberOfPlayers, int numberofCentral) {
+
+    if(numberOfPlayers == 2){
+        totalFactories = 5;
+    }
+    else if(numberOfPlayers == 3){
+        totalFactories = 7;
+    }
+    else{
+        totalFactories = 9;
+    }
+
+    if(numberofCentral == 1){
+        totalFactories += 1;
+    }
+    else{
+        totalFactories += 2;
+    }
+}
+
+int Factory::getTotalFactories() {
+    return totalFactories;
+}
+
+// fills factory from Tile Bag
 void Factory::fillFactory(Bag* tileBag){
     
-        factory[0]->addNode(new Tiles(firstplayer));
+    factory[0]->addNode(new Tiles(firstplayer));
     
-
     Tiles* t = nullptr;
    
     for(int i = this->numberCentral; i < totalFactories; i++){
@@ -77,6 +80,9 @@ void Factory::fillFactory(Bag* tileBag){
             else if(tile == 'O'){
                 t = new Tiles(Orange);
             }
+            else if(tile == 'F'){
+                t = new Tiles(firstplayer);
+            }
             factory[i]->addNode(t);
         }
     }
@@ -86,8 +92,6 @@ void Factory::fillFactory(Bag* tileBag){
 
 LinkedList *Factory::getList()
 {
-   
-
     for (int i = 0; i < totalFactories; i++)
     {
         return factory[i];
@@ -97,7 +101,6 @@ LinkedList *Factory::getList()
 
 void Factory::placeTileInZero(char tile, int central){
   
-   
     if(tile == 'U'){
         factory[central]->addNode(new Tiles(Black));
     }
@@ -120,7 +123,6 @@ void Factory::addRemainingTiles(int index, char selectedColour,int central){
     for(int i = 0; i < factory[index]->returnSize(); i++){
         char tileColour = factory[index]->findNode(i)->getTile()->getColour(); 
         if(tileColour != selectedColour) {
-            cout << "Not Selected: " << tileColour << endl;
             placeTileInZero(tileColour,central);
         }
     }
@@ -144,20 +146,19 @@ int Factory::getNumberTiles(int index, char tile){
 
 }
 
-void Factory::changeTiles(char tiles,int i){
-    int count = getNumberTiles(i,tiles);
-    int newCount = 0;
-    // LinkedList* factory[6] = {l1,l2,l3,l4,l5,l6};
-    // LinkedList** factory = test;
-    if(factory[i]!=nullptr){
-        for(int p=0; p<factory[i]->returnSize();p++){
-            if(factory[i]->findNode(p)->getTile()->getColour() == tiles && newCount < count ){
-                    factory[i]->findNode(p)->getTile()->setColour(notile);
-                    newCount++;
-            }
-        }
-    }
-}
+// void Factory::changeTiles(char tiles,int i){
+//     int count = getNumberTiles(i,tiles);
+//     int newCount = 0;
+  
+//     if(factory[i]!=nullptr){
+//         for(int p=0; p<factory[i]->returnSize();p++){
+//             if(factory[i]->findNode(p)->getTile()->getColour() == tiles && newCount < count ){
+//                     factory[i]->findNode(p)->getTile()->setColour(notile);
+//                     newCount++;
+//             }
+//         }
+//     }
+// }
 
 bool Factory::firstPlayerTileExsists(int central){
     Node* node = factory[central]->findNode(0);
@@ -194,7 +195,7 @@ std::string Factory::returnAsString() {
 
     // LinkedList *factory[6] = {l1, l2, l3, l4, l5, l6};
     std::string factoryString = "";      
-    for (int p = 0; p < 6; p++)
+    for (int p = 0; p < totalFactories; p++)
     {
 
         // factoryString += to_string(p) + ": ";
@@ -215,43 +216,82 @@ void Factory::deleteAll(int i){
     
 }
 
-void Factory::loadFactory(std::string* factoryStrings){
+void Factory::loadFactory(std::vector<std::string> factoryStrings){
    
-
     Tiles* t;
 
-    for(int i = 0; i < 6; i++) {
-        std::string line = factoryStrings[i];
+    for (auto i = factoryStrings.begin(); i != factoryStrings.end(); ++i) {
+    // for (std::vector<string>::const_iterator i = factoryStrings.begin(); i != factoryStrings.end(); ++i){
+        std::string line = *i;
+        int index = std::distance(factoryStrings.begin(), i);
+
         for(int j = 0; j < line.length(); j++) {
             char tile = line.at(j);
             if(tile == 'F') {
                 t = new Tiles(firstplayer);
-                factory[i]->addNode(t);
+                factory[index]->addNode(t);
             }
 
             else if(tile == 'R'){
                 t = new Tiles(Red);
-                factory[i]->addNode(t);
+                factory[index]->addNode(t);
             }
             else if(tile == 'B'){
                 t = new Tiles(DarkBlue);
-                factory[i]->addNode(t);
+                factory[index]->addNode(t);
             }
             else if(tile == 'Y'){
                 t = new Tiles(Yellow);
-                factory[i]->addNode(t);
+                factory[index]->addNode(t);
             }
             else if(tile == 'U'){
                 t = new Tiles(Black);
-                factory[i]->addNode(t);
+                factory[index]->addNode(t);
             }
             else if(tile == 'L'){
                 t = new Tiles(LightBlue);
-                factory[i]->addNode(t);
+                factory[index]->addNode(t);
+            }
+            else if(tile == 'O'){
+                t = new Tiles(Orange);
+                factory[index]->addNode(t);
             }
             
         }
     }
+
+    // for(int i = 0; i < 6; i++) {
+    //     std::string line = factoryStrings[i];
+    //     for(int j = 0; j < line.length(); j++) {
+    //         char tile = line.at(j);
+    //         if(tile == 'F') {
+    //             t = new Tiles(firstplayer);
+    //             factory[i]->addNode(t);
+    //         }
+
+    //         else if(tile == 'R'){
+    //             t = new Tiles(Red);
+    //             factory[i]->addNode(t);
+    //         }
+    //         else if(tile == 'B'){
+    //             t = new Tiles(DarkBlue);
+    //             factory[i]->addNode(t);
+    //         }
+    //         else if(tile == 'Y'){
+    //             t = new Tiles(Yellow);
+    //             factory[i]->addNode(t);
+    //         }
+    //         else if(tile == 'U'){
+    //             t = new Tiles(Black);
+    //             factory[i]->addNode(t);
+    //         }
+    //         else if(tile == 'L'){
+    //             t = new Tiles(LightBlue);
+    //             factory[i]->addNode(t);
+    //         }
+            
+    //     }
+    // }
 
 }
 
@@ -269,20 +309,20 @@ int Factory::getTotalSize(){
     return totalSize;
 }
 
-void Factory::staticFactory(){
-    test[0]->addNode(new Tiles(LightBlue));
-    test[0]->addNode(new Tiles(LightBlue));
+// void Factory::staticFactory(){
+//     test[0]->addNode(new Tiles(LightBlue));
+//     test[0]->addNode(new Tiles(LightBlue));
 
-    test[1]->addNode(new Tiles(DarkBlue));
+//     test[1]->addNode(new Tiles(DarkBlue));
 
 
     
-}
+// }
 
-void Factory::printStatic(){
-    for(int i = 0 ; i < 8 ; i++){
-        std::cout << i << ": ";
-        test[i]->printLine();
-    }
+// void Factory::printStatic(){
+//     for(int i = 0 ; i < 8 ; i++){
+//         std::cout << i << ": ";
+//         test[i]->printLine();
+//     }
 
-}
+// }

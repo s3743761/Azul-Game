@@ -10,11 +10,12 @@ using std::ofstream;
 Bag::Bag()
 {
     tiles = new LinkedList();
+    sixTileMode = false;
 }
 
 void Bag::fillBag()
 {
-    tiles = new LinkedList();
+    // tiles = new LinkedList();
 
     Tiles *t;
     for(int i = 0; i < 20; i++) {
@@ -94,6 +95,42 @@ int Bag::random(int min, int max)
     return randomNo;
 }
 
+void Bag::load(std::string tilesString) {
+
+    if(tilesString == "_"){
+        return;
+    } 
+
+    Tiles *t;
+    for(int i = 0; i < tilesString.length() ; i++) {
+        if(tilesString[i] == 'R'){
+            t = new Tiles(Red);
+            tiles->addNode(t);
+        }
+        else if(tilesString[i] == 'Y'){
+            t = new Tiles(Yellow);
+            tiles->addNode(t);
+        }
+    
+        else if(tilesString[i] == 'B'){
+            t = new Tiles(DarkBlue);
+            tiles->addNode(t);
+        }
+        else if(tilesString[i] == 'L'){
+            t = new Tiles(LightBlue);
+            tiles->addNode(t);
+        }
+        else if(tilesString[i] == 'U'){
+            t = new Tiles(Black);
+            tiles->addNode(t);
+        }
+        else if(tilesString[i] == 'O'){
+            t = new Tiles(Orange);
+            tiles->addNode(t);
+        }
+    }
+
+}
 
 std::string Bag::returnAsString() {
 

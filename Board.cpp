@@ -184,9 +184,9 @@ std::string Board::returnTriangleAsString(){
     std::string boardString = "";
 
     for(int i = 0 ; i < rows; i++){
-        for (int j = 0 ; j < (columns + 3) / 2; j++){
+        for (int j = 0 ; j < (columns - 1) /2; j++){
             boardString += board[i][j];
-            boardString += " ";
+            boardString += "";
         }
         
         boardString += "\n";
@@ -203,7 +203,7 @@ std::string Board::returnWallAsString(){
     for(int i = 0 ; i < rows; i++){
         for (int j = (columns + 3) / 2; j < columns ;j++){
             boardString += board[i][j];
-            boardString += " ";
+            boardString += "";
         }
         
         boardString += "\n";
@@ -214,22 +214,38 @@ std::string Board::returnWallAsString(){
 }
 
 
-void Board::loadBoard(std::string* triangle, std::string* wall){
-    // for(int i = 0 ; i < rows; i++){
-    //     for(int  j = 0 ; j < columns + 2; j += 2){
-    //         char c = triangle[i].at(j);            
-    //         board[i][j/2] = c;
-    //     }
-    // }
+void Board::loadBoard(std::vector<string> triangle, std::vector<std::string> wall){
 
-    // for(int i = 0 ; i < 5; i++){
-    //     // std::cout << wall[i] << std::endl;
-    //     for(int  j = 0 ; j < 10; j+= 2){
-    //         char c = wall[i].at(j);
-    //         board[i][j/2 + 7] = c;
-            
-    //     }
-    // }
+    for (auto i = triangle.begin(); i != triangle.end(); ++i) {
+        std::string line = *i;
+        int rowIndex = std::distance(triangle.begin(), i);
+
+        int blankSpaces = rows - line.length();
+
+        for(int b = 0; b < blankSpaces; b++) {
+            board[rowIndex][b] = EMPTY;
+        }
+
+
+        for(int j = 0; j < line.length(); j++) {
+            char tile = line.at(j);
+            board[rowIndex][blankSpaces + j] = tile;
+        }
+
+        board[rowIndex][rows] = AREA;
+        board[rowIndex][rows + 1] = AREA;
+    }
+
+    for (auto i = wall.begin(); i != wall.end(); ++i) {
+        std::string line = *i;
+        int rowIndex = std::distance(wall.begin(), i);
+        
+        for(int j = 0; j < line.length(); j++) {
+            char tile = line.at(j);
+            board[rowIndex][rows + 2 + j] = tile;
+        }
+    }
+    
 }
 
 
@@ -321,8 +337,8 @@ void Board::addBrokenTile(int count, int value, char tile){
 
         cout << "broken:";
         for(unsigned i = 0; i < broken.size(); i++){
-        cout << broken[i] << " ";
-    }
+            cout << broken[i] << " ";
+        }
     
         cout << endl;
     }
@@ -374,4 +390,41 @@ char Board::getTile(int i){
 int Board::getColumns(){
     int midBoard =  (columns - 1)/2;
     return midBoard;
+}
+
+void Board::loadBroken(string brokenString){
+   
+
+    if(brokenString == "_"){
+        return;
+    } 
+
+    std::copy(brokenString.begin(), brokenString.end(), std::back_inserter(broken));
+
+}
+
+vector<char> Board::getBroken(){
+    return broken;
+}
+
+void Board::printBroken(){
+    cout << "broken:";
+    for(unsigned i = 0; i < broken.size(); i++){
+        cout << broken[i] << " ";
+    }
+    
+    cout << endl;
+}
+
+string Board::returnBrokenAsString(){
+    std::string brokenString = ""; 
+
+    for(int i = 0; i < broken.size(); i++) {
+        brokenString += broken[i];
+    }
+    
+    if(brokenString.length() == 0){
+        return "_";
+    }
+    return brokenString;
 }

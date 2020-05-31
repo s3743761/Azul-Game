@@ -7,8 +7,9 @@
 
 using namespace std;
 
-Player::Player(string name, int points)
+Player::Player(int id, string name, int points)
 {
+  this->id = id;
   this->name = name;
   this->points = points;
 }
@@ -31,6 +32,16 @@ int Player::getPoints()
 void Player::setPoints(int points)
 {
   this->points = points;
+}
+
+int Player::getId()
+{
+  return this->id;
+}
+
+void Player::setId(int id)
+{
+  this->id = id;
 }
 
 LinkedList Player::returnlist()

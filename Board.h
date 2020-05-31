@@ -26,7 +26,7 @@ void addTileOnSquareBoard(int val, char c);
 void removeTileFromBoard(vector<char> &bagLid);
 std::string returnTriangleAsString();
 std::string returnWallAsString();
-void loadBoard(std::string* triangle, std::string* wall);
+void loadBoard(std::vector<string> triangle, std::vector<std::string> wall);
 int checkTilesHorizontally(int x);
 int checkTilesVertically(int y);
 int checkTotaltiles();
@@ -39,6 +39,10 @@ void placeTileGreyBoard(int i ,int j );
 int getRows();
 char getTile(int i);
 int getColumns();
+void loadBroken(string bagLidString);
+vector<char> getBroken();
+void printBroken();
+string returnBrokenAsString();
 
 
 

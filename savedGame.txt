@@ -1,0 +1,53 @@
+#Bag
+_
+#Lid
+_
+#Number of Players
+2
+#Number of Central Factories
+1
+#Six Tile Mode
+false
+#Grey Tile Mode
+false
+#Factories
+F U B
+U B Y B
+L U L R
+L U Y L
+R R B L
+
+#player who's turn it is
+1
+#round order
+21
+#Player
+1
+A
+0
+    .
+   ..
+  ...
+ YY..
+RRR..
+...U.
+....U
+..B..
+.....
+.....
+_
+#Player
+2
+B
+0
+    .
+   YY
+  LL.
+ BB..
+.....
+...U.
+L....
+.....
+.....
+.....
+FYY

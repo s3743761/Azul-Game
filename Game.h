@@ -4,9 +4,6 @@
 #include <iostream>
 #include "Board.h"
 
-
-
-
 class mainGame {
 public:
 mainGame();
@@ -14,42 +11,40 @@ void playGame();
 
 void countpoints(Player* player1, Board* board1);
 
-int getCount();
-int getPlayerNum();
-void setPlayerNum(int playerNumber);
+// int getCount();
+// int getPlayerNum();
+// void setPlayerNum(int playerNumber);
 void saveGame(std::string filename);
 void LoadGame(std::string filename);
 void help();
-void addPlayer(Player *player);
+void addPlayer(Player *player, Board* board);
 void reFill(vector<char> tileLid, Bag* tileBag);
-
-
-
-
-
+string returnLidAsString();
+void askForPlayers();
+void askForCentralFactories();
+void askForGameMode();
+int setPlayerOrderForRound();
+void playTurn(int factoryIndex, char colour, int row, Player* currentPlayer, Board* currentBoard);
+void askForGreyBoardInput();
 
 private:
-int row;
-std::string colour;
-int count;
-int playerNumber;
-Factory* factory;
-std::string player1Name;
-int player1Scores;
-std::string player2Name;
-int player2Scores;
 Bag* tileBag;
-Board* board1;
-Board* board2;
-bool boardsLoaded;
-Player** players;
-Board** boards;
-int length;
-string playerName;
-int playerScores;
 vector<char> bagLid;
 
-
+Factory* factory;
+Player** players;
+Player** orderPlayers;
+Board** boards;
+Board** orderBoards;
+int turnPlayerID;
+bool playerOrderSet;
+string playerOrder;
+int numberOfPlayers;
+int length;
+int numCentralFactories;
+bool sixTileMode;
+bool greyBoardMode;
+bool gameLoadedFromFile;
 };
 
 #endif 
