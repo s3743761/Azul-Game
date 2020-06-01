@@ -59,31 +59,36 @@ void Factory::fillFactory(Bag* tileBag){
    
     for(int i = this->numberCentral; i < totalFactories; i++){
         for(int j = 0; j < 4; j++){
-            char tile = tileBag->getList()->findNode(0)->getTile()->getColour();
-            tileBag->getList()->deleteNode(0);
-               
-            if(tile == 'R'){
-                t = new Tiles(Red);
+            
+            if(tileBag->getList()->findNode(0) != nullptr){
+                char tile = tileBag->getList()->findNode(0)->getTile()->getColour();
+                tileBag->getList()->deleteNode(0);
+                
+                if(tile == 'R'){
+                    t = new Tiles(Red);
+                }
+                else if(tile == 'B'){
+                    t = new Tiles(DarkBlue);
+                }
+                else if(tile == 'Y'){
+                    t = new Tiles(Yellow);
+                }
+                else if(tile == 'U'){
+                    t = new Tiles(Black);
+                }
+                else if(tile == 'L'){
+                    t = new Tiles(LightBlue);
+                }
+                else if(tile == 'O'){
+                    t = new Tiles(Orange);
+                }
+                else if(tile == 'F'){
+                    t = new Tiles(firstplayer);
+                }
+                factory[i]->addNode(t);
             }
-            else if(tile == 'B'){
-                t = new Tiles(DarkBlue);
-            }
-            else if(tile == 'Y'){
-                t = new Tiles(Yellow);
-            }
-            else if(tile == 'U'){
-                t = new Tiles(Black);
-            }
-            else if(tile == 'L'){
-                t = new Tiles(LightBlue);
-            }
-            else if(tile == 'O'){
-                t = new Tiles(Orange);
-            }
-            else if(tile == 'F'){
-                t = new Tiles(firstplayer);
-            }
-            factory[i]->addNode(t);
+            
+            
         }
     }
 
@@ -185,6 +190,7 @@ void Factory::print()
 {
     for (int p = 0; p < totalFactories; p++)
     {
+        
         std::cout << p << ": ";
         factory[p]->printLine();
     }

@@ -21,7 +21,7 @@ int getEmptyRowSize(int row);
 bool checkTileInMosiac(int row, char tile);
 ///// 
 void placeTileAtLast();
-void addTile(int row, char value, int count);
+void addTile(int row, char value, int count,vector<char> &bagLid);
 void addTileOnSquareBoard(int val, char c);
 void removeTileFromBoard(vector<char> &bagLid);
 std::string returnTriangleAsString();
@@ -32,7 +32,7 @@ int checkTilesVertically(int y);
 int checkTotaltiles();
 
 bool checkAdjacent(int i , int j);
-void addBrokenTile(int count, int value, char tile);
+void addBrokenTile(int count, int value, char tile,vector<char> &bagLid);
 int getSize();
 bool gameOver();
 void placeTileGreyBoard(int i ,int j );
@@ -43,14 +43,17 @@ void loadBroken(string bagLidString);
 vector<char> getBroken();
 void printBroken();
 string returnBrokenAsString();
+void addFirstPlayerTile(vector<char> &bagLid);
+void clearBroken(vector<char> &bagLid);
 
 
-
+char** board;
 private:
 int rows;    
 int columns;
-char** board;
+// char** board;
 char** mosaic;
+int maxBrokenSize;
 char fiveTileMosaic[5][5] = {
     {'B','Y','R','U','L'},
     {'L','B','Y','R','U'},

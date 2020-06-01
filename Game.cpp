@@ -21,6 +21,7 @@ mainGame::mainGame(){
 
 void mainGame::playGame(){
     
+    
     if(!gameLoadedFromFile) {
         
         askForGameMode();
@@ -79,6 +80,8 @@ void mainGame::playGame(){
                     
                     char colour;
                     int row;
+                    int centralFactoryIndex;
+
                     std::cin >> command;
                     // std::cin >> secondArgument;
                     
@@ -87,7 +90,15 @@ void mainGame::playGame(){
                         int factoryIndex = stoi(secondArgument);
                         std::cin >> colour;
                         std::cin >> row;
-                        playTurn(factoryIndex, colour, row, currentPlayer, currentBoard);
+
+                        if(numCentralFactories == 2 && (factoryIndex != 0 && factoryIndex != 1) ){
+                            std::cin >> centralFactoryIndex;
+                        }
+                        else{
+                            centralFactoryIndex = 0;
+                        }
+
+                        playTurn(factoryIndex, colour, row, centralFactoryIndex, currentPlayer, currentBoard);
                     }
                     else if(command == "save") {
                         std::cin >> secondArgument;
@@ -112,6 +123,9 @@ void mainGame::playGame(){
 
         if(greyBoardMode){
             askForGreyBoardInput();
+            for(int i = 0 ; i < length ; i++){
+                boards[i]->clearBroken(bagLid);
+            }
         }
         else{
             for(int i = 0 ; i < length ; i++){
@@ -119,6 +133,7 @@ void mainGame::playGame(){
                 boards[i]->removeTileFromBoard(bagLid);
                 countpoints(players[i], boards[i]);
                 std::cout << players[i]->getName() << "'s Total Points: " << players[i]->getPoints() << std::endl;
+                boards[i]->clearBroken(bagLid);
             }
         }
 
@@ -201,7 +216,7 @@ void mainGame::saveGame(string filename) {
         of << orderBoards[j]->returnBrokenAsString();
         of <<"\n";
     }
-    
+    playGame();   
     
 }
 
@@ -246,6 +261,7 @@ void mainGame::LoadGame(string filename){
         }
         else if(lineNumber == (14 + numFactories + 1)){
             turnPlayerID = stoi(line);
+            //players[turnPlayerID-1]->setFirstPlayer(1);TODO
         }
         else if(lineNumber == (14 + numFactories + 3)){
             playerOrder = line;
@@ -279,7 +295,12 @@ void mainGame::LoadGame(string filename){
                 of >> broken;
                 board->loadBoard(triangle, wall);
                 board->loadBroken(broken);
-                // TODO: if broken has F, set first player
+                if( broken.length() > 0 ){
+                    if(broken[0] == 'F'){
+                        player->setFirstPlayer(1);
+                    }
+
+                }
                 addPlayer(player,board);
     
             }
@@ -352,6 +373,9 @@ void mainGame::reFill(vector<char> bagLid, Bag* tileBag){
         }
         else if(*p == 'L'){
             t = new Tiles(LightBlue);
+        }
+        else if(*p == 'O'){
+            t = new Tiles(Orange);
         }
         tileBag->getList()->addNode(t);
     }
@@ -502,7 +526,7 @@ int mainGame::setPlayerOrderForRound() {
     return startingIndex;
 }
 
-void mainGame::playTurn(int factoryIndex, char colour, int row, Player* currentPlayer, Board* currentBoard) {
+void mainGame::playTurn(int factoryIndex, char colour, int row, int centralFactoryIndex, Player* currentPlayer, Board* currentBoard) {
     int numberTiles = factory->getNumberTiles(factoryIndex, colour);
                         
     if(numCentralFactories == 1){
@@ -515,40 +539,43 @@ void mainGame::playTurn(int factoryIndex, char colour, int row, Player* currentP
                 factory->removeElement(0, 'F');
                 currentPlayer->setFirstPlayer(1);
                 // currentPlayer->updatePoints(-1);
-                currentBoard->addBrokenTile(1,0,'F');
+                // currentBoard->addBrokenTile(1,0,'F');
+                currentBoard->addFirstPlayerTile(bagLid);
             }
         }
     }
     else{
-        int multipleCentral;
+        // int multipleCentral;
         if(factoryIndex != 0 && factoryIndex != 1){
-            cout<< "Enter the Central Factory you want to place the tile: ";
-            std::cin >> multipleCentral;
-            while(std::cin.fail() || multipleCentral < 0 || multipleCentral > 2){
-                std::cout << "Incorrect Central Factory, Try Again:" << endl;
-                std::cout << "Enter the Central Factory you want to place the tile: ";
-                std::cin.clear();
-                std::cin.ignore(256,'\n');
-                std::cin >> multipleCentral;
-            }
-            factory->addRemainingTiles(factoryIndex, colour, multipleCentral); 
+            // cout<< "Enter the Central Factory you want to place the tile: ";
+            // std::cin >> multipleCentral;
+            // while(std::cin.fail() || multipleCentral < 0 || multipleCentral > 2){
+            //     std::cout << "Incorrect Central Factory, Try Again:" << endl;
+            //     std::cout << "Enter the Central Factory you want to place the tile: ";
+            //     std::cin.clear();
+            //     std::cin.ignore(256,'\n');
+            //     std::cin >> multipleCentral;
+            // }
+            cout << "Central Factory Index: " << centralFactoryIndex << endl;
+            factory->addRemainingTiles(factoryIndex, colour, centralFactoryIndex); 
         } 
         else{ 
-            std::cout << "Remove Element, Factory Index: " << factoryIndex << " Colour: " << colour << endl;
+            // std::cout << "Remove Element, Factory Index: " << factoryIndex << " Colour: " << colour << endl;
             factory->removeElement(factoryIndex, colour); 
-            std::cout << "Factory Total Size: " << factory->getTotalSize() << std::endl;     
+            // std::cout << "Factory Total Size: " << factory->getTotalSize() << std::endl;     
             
             if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
                 factory->removeElement(0, 'F');
                 currentPlayer->setFirstPlayer(1);
                 // currentPlayer->updatePoints(-1);
-                currentBoard->addBrokenTile(1,0,'F');
+                // currentBoard->addBrokenTile(1,0,'F');
+                currentBoard->addFirstPlayerTile(bagLid);
             }
         }
 
     }
 
-    currentBoard->addTile(row - 1, colour, numberTiles);
+    currentBoard->addTile(row - 1, colour, numberTiles,bagLid);
 
     std::cout<< "Turn succesful." << std::endl;
 }

@@ -11,10 +11,14 @@ Board::Board(bool sixTileMode)
     if(sixTileMode) {
         rows = 6;
         columns = 14;
+        maxBrokenSize = 9;
+        broken.reserve(maxBrokenSize);
     }
     else {
         rows = 5;
         columns = 12;
+        maxBrokenSize = 7;
+        broken.reserve(maxBrokenSize);
     }
     board = new char*[rows];
     mosaic = new char*[rows];
@@ -23,6 +27,7 @@ Board::Board(bool sixTileMode)
         mosaic[i] = sixTileMode ? sixTileMosaic[i] : fiveTileMosaic[i];
         
     }
+    
 }
 
 Board::~Board()
@@ -119,7 +124,7 @@ void Board::placeTileAtLast(){
 }
 
 
-void Board::addTile(int row, char tile,int count){
+void Board::addTile(int row, char tile,int count,vector<char> &bagLid){
    
     int flag = 0;
     char sandwich = BLOCK;
@@ -137,7 +142,7 @@ void Board::addTile(int row, char tile,int count){
      
     
     printBoard();
-    addBrokenTile(count, val, tile);
+    addBrokenTile(count, val, tile, bagLid);
     cout<<endl;
     
 }
@@ -177,6 +182,18 @@ void Board::removeTileFromBoard(vector<char> &bagLid){
  
 
 }
+
+void Board::addFirstPlayerTile(vector<char> &bagLid){
+        broken.push_back('F');
+        std::rotate(broken.rbegin(), broken.rbegin() + 1, broken.rend());
+        if(broken.size() > 1 && broken.size() == maxBrokenSize){
+            bagLid.push_back(broken.back());
+            broken.pop_back();//this
+        
+        }
+        cout<<broken.size()<<endl;
+}
+
 
 
 std::string Board::returnTriangleAsString(){
@@ -328,28 +345,43 @@ bool Board::checkAdjacent(int row, int j){
         
 }
 
-void Board::addBrokenTile(int count, int value, char tile){
+void Board::addBrokenTile(int count, int value, char tile, vector<char> &bagLid){
 
     if(count > value){
-        for(int i = 0; i <count - value; i++){
-            broken.push_back(tile);
-        }
-
-        cout << "broken:";
-        for(unsigned i = 0; i < broken.size(); i++){
-            cout << broken[i] << " ";
-        }
-    
-        cout << endl;
-    }
-
-    else{
-        cout << "broken:";
-            for(unsigned i = 0; i < broken.size(); i++){
-                cout << broken[i] << " ";
+        for(int i = 0; i < count - value; i++){
+            if(broken.size() < maxBrokenSize) {
+                broken.push_back(tile);
             }
-        cout << endl;
+            else {
+                bagLid.push_back(tile);
+            }
+        }
+        // if(broken.size() > maxBrokenSize){
+        //     for(int i = 0; i <count - value; i++){
+        //         bagLid.push_back(tile);
+        //     }
+        // }
+        
+
+        // for(int i = 0; i <count - value; i++){
+        //     broken.push_back(tile);
+        // }
+
+        // cout << "broken:";
+        // for(unsigned i = 0; i < broken.size(); i++){
+        //     cout << broken[i] << " ";
+        // }
+    
+        // cout << endl;
     }
+
+    // else{
+    //     cout << "broken:";
+    //         for(unsigned i = 0; i < broken.size(); i++){
+    //             cout << broken[i] << " ";
+    //         }
+    //     cout << endl;
+    // }
 
 }
 
@@ -428,3 +460,13 @@ string Board::returnBrokenAsString(){
     }
     return brokenString;
 }
+
+void Board::clearBroken(vector<char> &bagLid){
+    broken.erase(std::remove(broken.begin(), broken.end(), 'F'), broken.end());
+    for (int i=0; i<broken.size(); i++){
+        bagLid.push_back(broken[i]); 
+    }
+    broken.clear();
+}
+
+

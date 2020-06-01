@@ -24,7 +24,7 @@ void askForPlayers();
 void askForCentralFactories();
 void askForGameMode();
 int setPlayerOrderForRound();
-void playTurn(int factoryIndex, char colour, int row, Player* currentPlayer, Board* currentBoard);
+void playTurn(int factoryIndex, char colour, int row, int centralFactoryIndex, Player* currentPlayer, Board* currentBoard);
 void askForGreyBoardInput();
 
 private:
