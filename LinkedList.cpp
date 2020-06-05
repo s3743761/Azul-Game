@@ -114,17 +114,32 @@ void LinkedList::deleteBack()
   /* prints everything in the linked list */
   void LinkedList::printLine()
   {
-    
+  
     current = head;
+    
 
     if(current != nullptr){
-        current->getTile()->printTile();
+        std::cout<<"";
+        if(current->getTile()->getColour() == 'F'){
+            std::cout<<"\u2460 ";
+        }
+        else{
+            // current->getTile()->printTile();
+             current->getTile()->printTileColour();
+
+        }
 
         while (current != nullptr && current->getNext() != nullptr)
         {
           current = current->getNext();
           std::cout << " ";
-          current->getTile()->printTile();
+          if(current->getTile()->getColour() == 'F'){
+            std::cout<<"\u2460 ";
+          }
+          else{
+            // current->getTile()->printTile();
+             current->getTile()->printTileColour();
+          }
         }
     }
 

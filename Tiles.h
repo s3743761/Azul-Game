@@ -18,6 +18,7 @@ Tiles(Colour colour);
 Colour getColour();
 std::string getTileDetails();
 void setColour(Colour colour);
+void printTileColour();
 
 void printTile();
 // std::string getIndexTiles(int i);

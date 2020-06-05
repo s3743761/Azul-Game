@@ -73,6 +73,7 @@ void Board::makeBoard()
 
 void Board::printBoard()
 {
+    
     for (int i = 0; i < rows; i++)
     {
         std::cout << i + 1 << ": ";
@@ -130,6 +131,8 @@ void Board::addTile(int row, char tile,int count,vector<char> &bagLid){
     char sandwich = BLOCK;
     int val = getEmptyRowSize(row);
 
+  
+
 
     if(checkTileInMosiac(row, tile) == true){
         for(int j  = 0 ; j < (columns - 1) / 2; j++) {
@@ -140,8 +143,7 @@ void Board::addTile(int row, char tile,int count,vector<char> &bagLid){
         }
     }
      
-    
-    printBoard();
+
     addBrokenTile(count, val, tile, bagLid);
     cout<<endl;
     
@@ -191,7 +193,7 @@ void Board::addFirstPlayerTile(vector<char> &bagLid){
             broken.pop_back();//this
         
         }
-        cout<<broken.size()<<endl;
+        
 }
 
 
@@ -356,32 +358,9 @@ void Board::addBrokenTile(int count, int value, char tile, vector<char> &bagLid)
                 bagLid.push_back(tile);
             }
         }
-        // if(broken.size() > maxBrokenSize){
-        //     for(int i = 0; i <count - value; i++){
-        //         bagLid.push_back(tile);
-        //     }
-        // }
         
-
-        // for(int i = 0; i <count - value; i++){
-        //     broken.push_back(tile);
-        // }
-
-        // cout << "broken:";
-        // for(unsigned i = 0; i < broken.size(); i++){
-        //     cout << broken[i] << " ";
-        // }
-    
-        // cout << endl;
     }
 
-    // else{
-    //     cout << "broken:";
-    //         for(unsigned i = 0; i < broken.size(); i++){
-    //             cout << broken[i] << " ";
-    //         }
-    //     cout << endl;
-    // }
 
 }
 
@@ -440,12 +419,11 @@ vector<char> Board::getBroken(){
 }
 
 void Board::printBroken(){
-    cout << "broken:";
+    cout << "Broken:";
     for(unsigned i = 0; i < broken.size(); i++){
         cout << broken[i] << " ";
     }
-    
-    cout << endl;
+    cout << "                                 ";
 }
 
 string Board::returnBrokenAsString(){
@@ -470,3 +448,201 @@ void Board::clearBroken(vector<char> &bagLid){
 }
 
 
+void Board::printRow(int i,bool greyBoardMode){
+    if(greyBoardMode){
+        for(int j=0; j < (columns+2)/2; j++) {
+            if(board[i][j] == 'R'){
+                cout<< ("\x1b[31mR\x1b[0m" );
+            }
+            else if(board[i][j] == 'B'){
+                cout<< ("\x1b[34mB\x1b[0m" );
+            }
+            else if(board[i][j] == 'L'){
+                cout<< ("\x1b[96mL\x1b[0m" );
+            }
+            else if(board[i][j] == 'U'){
+                cout<< ("\x1b[35mU\x1b[0m" );
+            }
+            else if(board[i][j] == 'Y'){
+                cout<< ("\x1b[33mY\x1b[0m" );
+            }
+            else if(board[i][j] == 'O'){
+                cout << ("\x1b[31;1mO\x1b[0m");
+            }
+            else{
+                cout<< (board[i][j]);
+            }
+        }
+        for(int p = (columns + 2)/2; p < columns; p++) {
+                if(board[i][p] == 'R'){
+                    cout<< ("\x1b[31m[R]\x1b[0m" );
+                }
+                else if(board[i][p]== 'B'){
+                    cout<< ("\x1b[34m[B]\x1b[0m" );
+                }
+                else if(board[i][p] == 'L'){
+                    cout<< ("\x1b[96m[L]\x1b[0m" );
+                }
+                else if(board[i][p] == 'U'){
+                    cout<< ("\x1b[35m[U]\x1b[0m" );
+                }
+                else if(board[i][p] == 'Y'){
+                    cout<< ("\x1b[33m[Y]\x1b[0m" );
+                }
+                else if(board[i][p] == 'O'){
+                    cout << ("\x1b[31;1m[O]\x1b[0m");
+                }
+                else{
+                    cout<<"[*]";
+                }
+        
+        }
+
+    }
+    else{
+        for(int j=0; j<(columns+2)/2; j++) {
+            if(board[i][j] == 'R'){
+                cout<< ("\x1b[31mR\x1b[0m" );
+            }
+            else if(board[i][j] == 'B'){
+                cout<< ("\x1b[34mB\x1b[0m" );
+            }
+            else if(board[i][j] == 'L'){
+                cout<< ("\x1b[96mL\x1b[0m" );
+            }
+            else if(board[i][j] == 'U'){
+                cout<< ("\x1b[35mU\x1b[0m" );
+            }
+            else if(board[i][j] == 'Y'){
+                cout<< ("\x1b[33mY\x1b[0m" );
+            }
+            else if(board[i][j] == 'O'){
+                cout << ("\x1b[31;1mO\x1b[0m");
+            }
+            else{
+                cout<< (board[i][j]);
+            }
+        }
+
+        for(int p = (columns + 2)/2; p < columns; p++) {
+            if(board[i][p] == BLOCK){
+                if(mosaic[i][p - (columns + 2)/2] == 'R') {
+                    cout << ("\u001b[41m[*]");
+                    cout << ("\u001b[0m");
+                }
+                else if(mosaic[i][p - (columns + 2)/2] == 'B'){
+                    cout << ("\u001b[44m[*]");
+                    cout << ("\u001b[0m");
+                }
+                else if(mosaic[i][p - (columns + 2)/2] == 'Y'){
+                    cout << ("\u001b[43m[*]");
+                    cout << ("\u001b[0m");
+                }
+                else if(mosaic[i][p - (columns + 2)/2] == 'L'){
+                    cout << ("\u001b[46m[*]");
+                    cout << ("\u001b[0m");
+                }
+                else if(mosaic[i][p - (columns + 2)/2] == 'U'){
+                    cout << ("\u001b[45m[*]");
+                    cout << ("\u001b[0m");
+                }
+                else if(mosaic[i][p - (columns + 2)/2] == 'O'){
+                    cout << ("\u001b[41;1m[*]");
+                    cout << ("\u001b[0m");
+                }
+
+                else{
+                    cout<< (board[i][p]);
+                }
+            }
+            else {
+                if(board[i][p] == 'R'){
+                    cout<< ("\x1b[31m[R]\x1b[0m" );
+                }
+                else if(board[i][p]== 'B'){
+                    cout<< ("\x1b[34m[B]\x1b[0m" );
+                }
+                else if(board[i][p] == 'L'){
+                    cout<< ("\x1b[96m[L]\x1b[0m" );
+                }
+                else if(board[i][p] == 'U'){
+                    cout<< ("\x1b[35m[U]\x1b[0m" );
+                }
+                else if(board[i][p] == 'Y'){
+                    cout<< ("\x1b[33m[Y]\x1b[0m" );
+                }
+                else if(board[i][p] == 'O'){
+                    cout << ("\x1b[31;1m[O]\x1b[0m");
+                }
+
+            }
+        }
+
+    }
+
+
+  
+}
+
+bool Board::validateBoardMove(int i,char tile){
+    for(int j = 0 ; j < (columns - 1)/2;j++){
+        if(board[i][j] != EMPTY){
+            if(board[i][j] == tile  || board[i][j] == BLOCK){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+    return false;
+}
+
+vector<int> Board::validRows(char tile){
+    vector<int> validRows ;
+    validRows.push_back(1);
+    // for(int i = 0 ; i  < rows;i++ ){
+    //     for(int j = 0 ; j  < (columns -1)/2;i++ ){
+    //         if(board[i][j] != EMPTY){
+    //             if(board[i][j] == tile  || board[i][j] == BLOCK){
+    //                 cout<<i<<endl;
+    // //                 // validRows.push_back(i);
+    //             }
+    //         }
+    //     }
+    // }
+    return validRows;
+}
+
+void Board::printBoardValidRows(char tile)
+{
+    vector<int> vect = validRows(tile); 
+    for (int i = 0; i < rows; i++)
+    {
+        for (int x : vect) {
+            if( x -1 == i){
+                cout<<"->";
+            }
+        }
+        std::cout << "  "<<i + 1 << ": ";
+        for (int j = 0; j < columns; j++)
+        {
+            std::cout << board[i][j];
+        }
+        std::cout << std::endl;
+    }
+}
+
+int Board::getNumberOfEmptySpaces(){
+    int count = 0 ;
+    for(int i = 0 ;i < rows;i++){
+        for(int j = 0 ; j < (columns-2)/2;j++){
+            if(board[i][j] != EMPTY){
+                if(board[i][j] == BLOCK){
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
+}

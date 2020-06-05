@@ -190,12 +190,13 @@ void Factory::print()
 {
     for (int p = 0; p < totalFactories; p++)
     {
-        
+    
         std::cout << p << ": ";
         factory[p]->printLine();
     }
     
 }
+
 
 std::string Factory::returnAsString() {
 
@@ -332,3 +333,7 @@ int Factory::getTotalSize(){
 //     }
 
 // }
+
+int Factory::getNumberoFactories(){
+    return totalFactories;
+}

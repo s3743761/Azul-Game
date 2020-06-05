@@ -11,9 +11,7 @@ void playGame();
 
 void countpoints(Player* player1, Board* board1);
 
-// int getCount();
-// int getPlayerNum();
-// void setPlayerNum(int playerNumber);
+
 void saveGame(std::string filename);
 void LoadGame(std::string filename);
 void help();
@@ -26,6 +24,10 @@ void askForGameMode();
 int setPlayerOrderForRound();
 void playTurn(int factoryIndex, char colour, int row, int centralFactoryIndex, Player* currentPlayer, Board* currentBoard);
 void askForGreyBoardInput();
+void printBoardAllign();
+void printPlayers(Player *currentPlayer);
+void printBroken(bool sixTileMode);
+void printScores();
 
 private:
 Bag* tileBag;
@@ -45,6 +47,7 @@ int numCentralFactories;
 bool sixTileMode;
 bool greyBoardMode;
 bool gameLoadedFromFile;
+
 };
 
 #endif 

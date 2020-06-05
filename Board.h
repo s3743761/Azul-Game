@@ -45,6 +45,12 @@ void printBroken();
 string returnBrokenAsString();
 void addFirstPlayerTile(vector<char> &bagLid);
 void clearBroken(vector<char> &bagLid);
+void printPreetyBoard();
+void printRow(int i,bool greyBoardMode);
+bool validateBoardMove(int i,char tile);
+vector<int> validRows(char tile);
+void printBoardValidRows(char tile);
+int getNumberOfEmptySpaces();
 
 
 char** board;

@@ -20,7 +20,18 @@ mainGame::mainGame(){
 }
 
 void mainGame::playGame(){
-    
+
+    // tileBag->fillBag();
+    // tileBag->Shuffle();
+    // factory = new Factory(2,1);
+    // factory->fillFactory(tileBag);
+
+    // factory->print();
+
+
+
+
+  
     
     if(!gameLoadedFromFile) {
         
@@ -35,7 +46,7 @@ void mainGame::playGame(){
         factory = new Factory(numberOfPlayers, numCentralFactories);
         factory->fillFactory(tileBag);
 
-        players[1]->setFirstPlayer(1); 
+        players[0]->setFirstPlayer(1); 
         
     }
     
@@ -46,7 +57,7 @@ void mainGame::playGame(){
 
     std::cout << "\nLet's Play!" << std::endl;
     std::cout << "\n=== Start Round ===" << std::endl;
-
+    int roundNumber = 1;
     while(!gameOver) {
         int startingIndex = 0;
         startingIndex = setPlayerOrderForRound();
@@ -59,19 +70,27 @@ void mainGame::playGame(){
                 }
 
                 if(factory->getTotalSize() > 0){
-
+                    std::cout << "Round : " << roundNumber << std::endl;
                     Player* currentPlayer = orderPlayers[i];
                     turnPlayerID = currentPlayer->getId();
                     Board* currentBoard = orderBoards[i];
                     
-                    std::cout << "TURN FOR PLAYER : " << currentPlayer->getName() << std::endl;
-                    std::cout << std::endl;
+                    // std::cout << "TURN FOR PLAYER : " << currentPlayer->getName() << std::endl;
+                    // std::cout << std::endl;
+                    
                     std::cout << "Factories:" << std::endl;
                     factory->print();
 
-                    std::cout << "Mosaic for " << currentPlayer->getName() << ":" << std::endl;
-                    currentBoard->printBoard();
-                    currentBoard->printBroken();
+                    // std::cout << "Mosaic for " << currentPlayer->getName() << ":" << std::endl;
+                    // currentBoard->printBoard();
+                    printPlayers(currentPlayer);
+                    printBoardAllign();
+                    printBroken(sixTileMode);
+                    // currentBoard->printBroken();
+                    if(currentBoard->getNumberOfEmptySpaces()){
+                        cout << "The Player doesn't have any empty spaces, Please place tile in Broken."<<endl;
+                        std::cout << "Example Turn: turn<factory><tile><-1> "<<endl;
+                    }
 
                     std::cout << "> ";
                     string command;
@@ -91,6 +110,46 @@ void mainGame::playGame(){
                         std::cin >> colour;
                         std::cin >> row;
 
+                     
+                        while(std::cin.fail() || factoryIndex > factory->getNumberoFactories() - 1 || factoryIndex < 0){
+                            std::cout << "Factory Doesn't Exsist, Try Again: "<<endl;
+                            std::cout << "> ";
+                            std::cin.clear();
+                            std::cin.ignore(256,'\n');
+                            std::cin >> command;
+                            std::cin >> secondArgument;
+                            std::cin >> colour;
+                            std::cin >> row;
+                            factoryIndex = stoi(secondArgument);
+                        }
+                        
+                        
+                        if(row == -1){
+                            // std::cout << "No Spaces left in Pattern Please Add Tiles in Broken: "<<endl;
+                            // int numberTiles = factory->getNumberTiles(factoryIndex, colour);
+                            // std::cout << "Example Turn: turn<factory><tile><-1> "<<endl;
+                            // cout  << numberTiles;
+                            // cout << factoryIndex;
+                            // currentBoard->addBrokenTile(numberTiles,factoryIndex,colour,bagLid);
+                            // factory->removeElement(factoryIndex,colour);
+                        }
+                        else {
+                            while(currentBoard->validateBoardMove(row-1,colour) == false){
+                                vector<int> validRows = currentBoard->validRows(colour);
+        
+                                currentBoard->printBoardValidRows(colour);
+                                std::cout << "Invalid Move, Board has a different colour tile. Try Again: "<<endl;
+                                std::cout << "> ";
+                                std::cin.clear();
+                                std::cin.ignore(256,'\n');
+                                std::cin >> command;
+                                std::cin >> secondArgument;
+                                std::cin >> colour;
+                                std::cin >> row;
+                                factoryIndex = stoi(secondArgument);
+                            }
+                        }
+
                         if(numCentralFactories == 2 && (factoryIndex != 0 && factoryIndex != 1) ){
                             std::cin >> centralFactoryIndex;
                         }
@@ -99,15 +158,46 @@ void mainGame::playGame(){
                         }
 
                         playTurn(factoryIndex, colour, row, centralFactoryIndex, currentPlayer, currentBoard);
+                        if(factory->getTotalSize() == 0){
+                            roundNumber++;
+                        }
+                        
+
+
+                        // while(currentBoard->validateBoardMove(row-1,colour) == false){
+                            // vector<int> validRows = currentBoard->validRows(colour);
+        
+                            // currentBoard->printBoardValidRows(colour);
+                            // std::cout << "Invalid Move, Board has a different colour tile. Try Again: "<<endl;
+                            // std::cout << "> ";
+                            // std::cin.clear();
+                            // std::cin.ignore(256,'\n');
+                            // std::cin >> command;
+                            // std::cin >> secondArgument;
+                            // std::cin >> colour;
+                            // std::cin >> row;
+                            // factoryIndex = stoi(secondArgument);
+                        // }
+
+                        // if(numCentralFactories == 2 && (factoryIndex != 0 && factoryIndex != 1) ){
+                        //     std::cin >> centralFactoryIndex;
+                        // }
+                        // else{
+                        //     centralFactoryIndex = 0;
+                        // }
+
+                        // playTurn(factoryIndex, colour, row, centralFactoryIndex, currentPlayer, currentBoard);
+                        // roundNumber++;
                     }
                     else if(command == "save") {
                         std::cin >> secondArgument;
                         saveGame(secondArgument + ".txt");
-                        return;
+                        i--;
+                        
                     }
                     else if(command == "help"){
-                    // else if(command == "help" && secondArgument == "1"){
                         help();
+                        i--;
                     }
                     else {
                         std::cout << "Invalid Command. Try Again" << std::endl;
@@ -216,7 +306,7 @@ void mainGame::saveGame(string filename) {
         of << orderBoards[j]->returnBrokenAsString();
         of <<"\n";
     }
-    playGame();   
+    // playGame();   
     
 }
 
@@ -322,6 +412,12 @@ void mainGame::LoadGame(string filename){
 
 
 void mainGame::countpoints(Player* player, Board* board){
+    if(board->getBroken().size() == 1 || board->getBroken().size() == 2){
+        player->updatePoints(board->getBroken().size());
+    }
+    else if(board->getBroken().size() == 3 || board->getBroken().size() == 4){
+        player->updatePoints(board->getBroken().size());
+    }
 //   int points1 = 0;
 //     for (int i = 0; i < 5; i++){
        
@@ -344,8 +440,22 @@ void mainGame::countpoints(Player* player, Board* board){
 }
 
 void mainGame::help(){
-    std::cout << "A sample turn for the game looks like :";
-    std::cout << "turn <factory> <colour> <row>"<<endl;
+    if(numCentralFactories == 2){
+         std::cout << "A sample turn for the game looks like :"<<endl;
+        std::cout << "turn <factory> <colour> <row><Number of factory you'd place the tile>"<<endl;
+    }
+    else{
+        std::cout << "A sample turn for the game looks like :"<<endl;
+        std::cout << "turn <factory> <colour> <row>"<<endl;
+    }
+
+    if(greyBoardMode){
+        std::cout<<"A Player places Tile at the end of Round at any column of the Player's choice."<<endl;
+    }
+    else{
+        std::cout<<"The Tiles are automatically placed in the Mosiac when the round ends."<<endl;
+    }
+   
 
 }
 
@@ -538,28 +648,18 @@ void mainGame::playTurn(int factoryIndex, char colour, int row, int centralFacto
             if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
                 factory->removeElement(0, 'F');
                 currentPlayer->setFirstPlayer(1);
-                // currentPlayer->updatePoints(-1);
-                // currentBoard->addBrokenTile(1,0,'F');
                 currentBoard->addFirstPlayerTile(bagLid);
             }
         }
     }
     else{
-        // int multipleCentral;
+      
         if(factoryIndex != 0 && factoryIndex != 1){
-            // cout<< "Enter the Central Factory you want to place the tile: ";
-            // std::cin >> multipleCentral;
-            // while(std::cin.fail() || multipleCentral < 0 || multipleCentral > 2){
-            //     std::cout << "Incorrect Central Factory, Try Again:" << endl;
-            //     std::cout << "Enter the Central Factory you want to place the tile: ";
-            //     std::cin.clear();
-            //     std::cin.ignore(256,'\n');
-            //     std::cin >> multipleCentral;
-            // }
-            cout << "Central Factory Index: " << centralFactoryIndex << endl;
+           
             factory->addRemainingTiles(factoryIndex, colour, centralFactoryIndex); 
         } 
         else{ 
+            
             // std::cout << "Remove Element, Factory Index: " << factoryIndex << " Colour: " << colour << endl;
             factory->removeElement(factoryIndex, colour); 
             // std::cout << "Factory Total Size: " << factory->getTotalSize() << std::endl;     
@@ -567,16 +667,18 @@ void mainGame::playTurn(int factoryIndex, char colour, int row, int centralFacto
             if(factory->getTotalSize() > 0 && factory->firstPlayerTileExsists(0) == true){
                 factory->removeElement(0, 'F');
                 currentPlayer->setFirstPlayer(1);
-                // currentPlayer->updatePoints(-1);
-                // currentBoard->addBrokenTile(1,0,'F');
                 currentBoard->addFirstPlayerTile(bagLid);
             }
         }
 
     }
 
-    currentBoard->addTile(row - 1, colour, numberTiles,bagLid);
-
+    if( row == -1) {
+        currentBoard->addBrokenTile(numberTiles, 0,colour,bagLid);
+    }
+    else{
+        currentBoard->addTile(row - 1, colour, numberTiles, bagLid);
+    }
     std::cout<< "Turn succesful." << std::endl;
 }
 
@@ -611,4 +713,69 @@ void mainGame::askForGreyBoardInput(){
         }
         boards[i]->removeTileFromBoard(bagLid);
     }
+}
+
+void mainGame::printBoardAllign(){
+    int rows = boards[0]->getRows();
+   
+       
+        for(int i = 0; i < rows; i++) {
+            cout<< i+1<<"|";
+
+            for(int p = 0 ; p < numberOfPlayers ; p++){
+                orderBoards[p]->printRow(i,greyBoardMode);
+                std::cout<<"                  ";
+            }
+            
+            std::cout<<endl;
+            
+        }
+
+}
+
+void mainGame::printPlayers(Player *currentPlayer){
+
+        cout << "+---------"<<endl;
+
+        for(int i = 0 ; i < numberOfPlayers ; i++){
+            if(currentPlayer->getName() == orderPlayers[i]->getName()){
+               cout<<("\u25cf");
+            }
+            cout << " Player  " << orderPlayers[i]->getId();
+            cout << " Points: " << orderPlayers[i]->getPoints() << " (" << orderBoards[i]->getBroken().size() <<")" <<"         ";
+
+            cout<<"     ";
+
+        }
+
+        cout<<endl;
+        cout << "+---------"<<endl;
+         
+    
+    
+}
+
+void mainGame::printBroken(bool sixTileMode){
+    // for(int i = 0 ; i < numberOfPlayers ; i++){
+    //     cout << "-1 -1 -2 -2 -3 -3 ";
+    //     if( sixTileMode == true){
+    //         cout << "-4 -4";
+    //     }
+    //     cout<<"      ";
+    // }
+    // cout<<endl;
+    
+    for(int i = 0 ; i < numberOfPlayers ; i++){
+    //     cout << "|Floor: ";
+    //     for(int j = 0 ; j < boards[i]->getBroken().size() ; j++){
+    //         cout << boards[i]->getBroken()[i] << " ";
+    //     }
+    //     cout<<"                               ";
+        orderBoards[i]->printBroken();
+    }
+    cout<<endl;
+}
+
+void mainGame::printScores(){
+
 }

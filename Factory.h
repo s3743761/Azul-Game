@@ -35,6 +35,8 @@ void deleteAll(int i);
 void addRemainingTiles(int index, char selectedColour,int central);
 int getTotalSize();
 bool firstPlayerTileExsists(int central);
+void preetyPrint();
+int getNumberoFactories();
 // void staticFactory();
 // void printStatic();
 
