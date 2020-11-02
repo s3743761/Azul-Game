@@ -1,8 +1,8 @@
 #Bag
-_
+BLYLBRRYURBBYLBYRUYUUUYRBULLYYLUBRRUYBBBUYLUBRLRRLRRYURRUBRYYRYBYLUBLBRYYRYLYLLL
 #Lid
 _
-#Number of Players
+#Number Of Players
 2
 #Number of Central Factories
 1
@@ -11,16 +11,16 @@ false
 #Grey Tile Mode
 false
 #Factories
-F U B
-U B Y B
-L U L R
-L U Y L
-R R B L
-
+F
+L B U U
+U U B B
+U R B Y
+B R U L
+U L L L
 #player who's turn it is
 1
 #round order
-21
+12
 #Player
 1
 A
@@ -28,11 +28,11 @@ A
     .
    ..
   ...
- YY..
-RRR..
-...U.
-....U
-..B..
+ ....
+.....
+.....
+.....
+.....
 .....
 .....
 _
@@ -41,13 +41,13 @@ _
 B
 0
     .
-   YY
-  LL.
- BB..
-.....
-...U.
-L....
+   ..
+  ...
+ ....
 .....
 .....
 .....
-FYY
+.....
+.....
+.....
+_

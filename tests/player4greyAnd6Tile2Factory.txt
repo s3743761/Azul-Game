@@ -1,0 +1,96 @@
+#Bag
+LLYOOULLYYYYOYYYLLLLBLLBBBBBBORRUUURRRROOOORRRRRRRBBBBBBYUULLLLLB
+#Lid
+BYYYYYUUUUUUULYYUUUORRLLLLYOOULLYYYYOYYYLLLLBLLBBBBBBORRUUURRRROOOORRRRRRRBBBBBBYUULLLLLB
+#Number Of Players
+4
+#Number of Central Factories
+2
+#Six Tile Mode
+true
+#Grey Tile Mode
+true
+#Factories
+L L L B
+L Y
+
+U L R U
+
+
+Y Y U U
+
+
+
+
+#player who's turn it is
+2
+#round order
+4123
+#Player
+4
+D
+16
+     U
+    ..
+   U..
+  BB..
+ RR...
+......
+OBY...
+RL.U..
+L.....
+......
+....L.
+..B...
+_
+#Player
+1
+A
+20
+     .
+    ..
+   ...
+  UUUU
+ YY...
+......
+B.YO..
+YOR...
+.YU...
+...R..
+......
+......
+F
+#Player
+2
+B
+11
+     .
+    Y.
+   BBB
+  ....
+ RRRR.
+......
+O.U...
+UL....
+.O....
+..Y...
+.U....
+..R...
+_
+#Player
+3
+C
+20
+     U
+    ..
+   OO.
+  YY..
+ .....
+......
+LOR...
+Y.B...
+UY....
+BL....
+......
+......
+_
