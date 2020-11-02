@@ -16,12 +16,13 @@ The game implements advanced modes:
 - Players can choose a "Grey Mode" or even a 6-tile mode
 - Players can also choose to pick from one or two central factories.
 
-![Gameplay](gameplay.png){ width=50% }
-
+![Gameplay](gameplay.png)
+<img src="gameplay.png"  width="120" height="120">
+     
 ### Architecture
 The architecture of the application follows a standard Object-Oriented Architecture with the objects
 divided into re-usable, single-responsibility components which follow composition over inheritance. 
-![Architecture](architecture.png){ width=50% }
+![Architecture](architecture.png)
 
 ### Testing
 Conducted various tests by automatically saving the game 
