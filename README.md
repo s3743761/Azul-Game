@@ -17,7 +17,6 @@ The game implements advanced modes:
 - Players can also choose to pick from one or two central factories.
 
 ![Gameplay](gameplay.png)
-<img src="gameplay.png"  width="120" height="120">
      
 ### Architecture
 The architecture of the application follows a standard Object-Oriented Architecture with the objects
