@@ -1,6 +1,14 @@
 # Azul Game (Console)
 
-Implements the Azul board game as a console game built in C++
+Implements the Azul board game as a console game built in C++ using the following programming skills:
+- Pointers
+- Dynamic Memory Management
+- File Processing
+- Polymorphism and Encapsulation
+- Program State Management
+- Exception Handling
+- Data structures
+
 
 
 
